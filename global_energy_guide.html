@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Complete Guide to Global Energy</title>
+<style>
+  :root {
+    --coal: #3d2b1f;
+    --oil: #1a1a2e;
+    --gas: #16213e;
+    --nuclear: #0f3460;
+    --hydro: #0e6ba8;
+    --solar: #f4a261;
+    --wind: #2ec4b6;
+    --bio: #57cc99;
+    --geo: #e76f51;
+    --bg: #0d1117;
+    --surface: #161b22;
+    --surface2: #21262d;
+    --border: #30363d;
+    --text: #e6edf3;
+    --text2: #8b949e;
+    --accent: #58a6ff;
+    --green: #3fb950;
+    --yellow: #d29922;
+    --red: #f85149;
+    --orange: #f4a261;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    font-size: 15px;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(13,17,23,0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 20px;
+    display: flex;
+    gap: 4px;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+  }
+  nav button {
+    background: none;
+    border: none;
+    color: var(--text2);
+    padding: 14px 12px;
+    cursor: pointer;
+    font-size: 13px;
+    white-space: nowrap;
+    transition: color 0.2s;
+    border-bottom: 2px solid transparent;
+  }
+  nav button:hover { color: var(--text); }
+  nav button.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+  /* SECTIONS */
+  section {
+    display: none;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+  }
+  section.active { display: block; }
+
+  h1 { font-size: 2rem; font-weight: 700; margin-bottom: 8px; }
+  h2 { font-size: 1.4rem; font-weight: 700; margin: 36px 0 12px; color: var(--accent); }
+  h3 { font-size: 1.1rem; font-weight: 600; margin: 24px 0 8px; }
+  p { margin-bottom: 14px; color: var(--text); }
+  .lead { font-size: 1.05rem; color: var(--text2); margin-bottom: 28px; }
+
+  /* CARDS */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+    margin: 20px 0;
+  }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+    transition: border-color 0.2s, transform 0.15s;
+  }
+  .card:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .card .icon { font-size: 2rem; margin-bottom: 10px; }
+  .card .title { font-weight: 700; font-size: 1rem; margin-bottom: 6px; }
+  .card .subtitle { font-size: 0.85rem; color: var(--text2); margin-bottom: 10px; }
+  .card .price-tag {
+    display: inline-block;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 3px 10px;
+    font-size: 0.8rem;
+    font-family: monospace;
+    color: var(--green);
+    margin-top: 4px;
+  }
+
+  /* LCOE BAR CHART */
+  .lcoe-chart { margin: 20px 0; }
+  .lcoe-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+  .lcoe-label { width: 180px; font-size: 0.85rem; flex-shrink: 0; }
+  .lcoe-bar-wrap { flex: 1; background: var(--surface2); border-radius: 4px; height: 24px; overflow: hidden; }
+  .lcoe-bar {
+    height: 100%;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    padding-left: 8px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    transition: width 1s ease;
+  }
+  .lcoe-value { width: 80px; text-align: right; font-size: 0.8rem; color: var(--text2); font-family: monospace; }
+
+  /* REGION GRID */
+  .region-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+    margin: 20px 0;
+  }
+  .region-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+  }
+  .region-card .region-name {
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .region-card .flag { font-size: 1.4rem; }
+
+  /* PROGRESS BARS */
+  .mix-bars { margin: 10px 0; }
+  .mix-row { margin-bottom: 6px; }
+  .mix-name { font-size: 0.78rem; color: var(--text2); margin-bottom: 3px; display: flex; justify-content: space-between; }
+  .mix-bar-bg { background: var(--surface2); border-radius: 3px; height: 10px; overflow: hidden; }
+  .mix-bar { height: 100%; border-radius: 3px; }
+
+  /* TIMELINE */
+  .timeline { margin: 24px 0; position: relative; }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 18px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--border);
+  }
+  .tl-item { display: flex; gap: 20px; margin-bottom: 28px; position: relative; }
+  .tl-dot {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--surface2);
+    border: 2px solid var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 0.75rem;
+    font-weight: 700;
+    z-index: 1;
+  }
+  .tl-content { flex: 1; }
+  .tl-year { font-size: 0.8rem; color: var(--accent); font-weight: 700; margin-bottom: 4px; }
+  .tl-title { font-weight: 600; margin-bottom: 4px; }
+  .tl-text { font-size: 0.88rem; color: var(--text2); }
+
+  /* CALLOUT */
+  .callout {
+    background: var(--surface);
+    border-left: 4px solid var(--accent);
+    border-radius: 0 8px 8px 0;
+    padding: 16px 20px;
+    margin: 20px 0;
+  }
+  .callout.warn { border-left-color: var(--yellow); }
+  .callout.danger { border-left-color: var(--red); }
+  .callout.success { border-left-color: var(--green); }
+  .callout .callout-title { font-weight: 700; font-size: 0.9rem; margin-bottom: 6px; }
+
+  /* COMPARISON TABLE */
+  .comp-table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 0.88rem; }
+  .comp-table th {
+    background: var(--surface2);
+    padding: 10px 14px;
+    text-align: left;
+    border: 1px solid var(--border);
+    font-weight: 700;
+    color: var(--accent);
+  }
+  .comp-table td {
+    padding: 9px 14px;
+    border: 1px solid var(--border);
+    vertical-align: top;
+  }
+  .comp-table tr:nth-child(even) td { background: var(--surface); }
+  .comp-table tr:hover td { background: var(--surface2); }
+
+  /* TAG */
+  .tag {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin: 2px;
+  }
+  .tag.green { background: rgba(63,185,80,0.15); color: var(--green); border: 1px solid rgba(63,185,80,0.3); }
+  .tag.red { background: rgba(248,81,73,0.15); color: var(--red); border: 1px solid rgba(248,81,73,0.3); }
+  .tag.yellow { background: rgba(210,153,34,0.15); color: var(--yellow); border: 1px solid rgba(210,153,34,0.3); }
+  .tag.blue { background: rgba(88,166,255,0.15); color: var(--accent); border: 1px solid rgba(88,166,255,0.3); }
+  .tag.orange { background: rgba(244,162,97,0.15); color: var(--orange); border: 1px solid rgba(244,162,97,0.3); }
+
+  /* DIVIDER */
+  hr { border: none; border-top: 1px solid var(--border); margin: 32px 0; }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, #0d1117 0%, #161b22 50%, #0f3460 100%);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 40px;
+    margin-bottom: 32px;
+    text-align: center;
+  }
+  .hero h1 { font-size: 2.2rem; background: linear-gradient(90deg, #58a6ff, #2ec4b6, #f4a261); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+  /* STAT ROW */
+  .stat-row { display: flex; gap: 16px; flex-wrap: wrap; margin: 20px 0; }
+  .stat-box {
+    flex: 1;
+    min-width: 140px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px;
+    text-align: center;
+  }
+  .stat-box .num { font-size: 1.8rem; font-weight: 700; color: var(--accent); }
+  .stat-box .lbl { font-size: 0.78rem; color: var(--text2); margin-top: 4px; }
+
+  @media (max-width: 600px) {
+    h1 { font-size: 1.5rem; }
+    .hero { padding: 24px 16px; }
+    .hero h1 { font-size: 1.6rem; }
+    .lcoe-label { width: 130px; }
+  }
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <button class="active" onclick="show('intro')">🌍 Overview</button>
+  <button onclick="show('types')">⚡ Energy Types</button>
+  <button onclick="show('lcoe')">💰 Prices & LCOE</button>
+  <button onclick="show('production')">🏭 How It's Made</button>
+  <button onclick="show('eu')">🇪🇺 EU Deep Dive</button>
+  <button onclick="show('regions')">🗺️ World Regions</button>
+  <button onclick="show('geopolitics')">🌐 Geopolitics</button>
+  <button onclick="show('future')">🔮 Future</button>
+</nav>
+
+<!-- ========== OVERVIEW ========== -->
+<section id="intro" class="active">
+  <div class="hero">
+    <div style="font-size:3rem;margin-bottom:12px">⚡🌍💡</div>
+    <h1>The Complete Guide to Global Energy</h1>
+    <p style="color:var(--text2);margin-top:12px;font-size:1rem">Everything about energy — types, production, prices, geopolitics, and the global transition</p>
+  </div>
+
+  <div class="stat-row">
+    <div class="stat-box">
+      <div class="num">650 EJ</div>
+      <div class="lbl">Global energy demand 2024</div>
+    </div>
+    <div class="stat-box">
+      <div class="num">86%</div>
+      <div class="lbl">Still fossil fuel-based (2024)</div>
+    </div>
+    <div class="stat-box">
+      <div class="num">+16%</div>
+      <div class="lbl">Renewable capacity growth 2024</div>
+    </div>
+    <div class="stat-box">
+      <div class="num">$73/GJ</div>
+      <div class="lbl">Avg per capita use globally</div>
+    </div>
+  </div>
+
+  <h2>What Is Energy, Really?</h2>
+  <p>Energy is the capacity to do work — to power factories, heat homes, move vehicles, and run data centers. The global energy system is the largest industrial enterprise in human history. As of 2024, humanity consumed about <strong>650 exajoules (EJ)</strong> of energy per year — roughly equivalent to burning 155 billion barrels of oil.</p>
+
+  <p>Energy comes in two fundamental roles: <strong>primary energy</strong> (what we extract from nature — coal, oil, uranium, sunlight) and <strong>final energy</strong> (what reaches the consumer after conversion and transmission losses). About 30–40% of primary energy is lost in conversion.</p>
+
+  <h2>The Big Picture: Where Does Energy Come From?</h2>
+  <div class="callout">
+    <div class="callout-title">2024 Global Primary Energy Mix</div>
+    Oil makes up ~34%, coal ~27%, natural gas ~25%, renewables (hydro + wind + solar + bio) ~14%, and nuclear ~5%. Despite massive growth in renewables, fossil fuels still account for <strong>86% of all energy</strong> consumed globally.
+  </div>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="icon">🛢️</div>
+      <div class="title">Oil / Petroleum</div>
+      <div class="subtitle">King of transport. 34% of global energy. Dominated by OPEC+ and US shale.</div>
+      <span class="tag red">Fossil</span><span class="tag yellow">Geopolitically sensitive</span>
+    </div>
+    <div class="card">
+      <div class="icon">🪨</div>
+      <div class="title">Coal</div>
+      <div class="subtitle">Largest share of electricity globally. Hit record demand in 2024 despite transition goals.</div>
+      <span class="tag red">Fossil</span><span class="tag red">Highest CO₂</span>
+    </div>
+    <div class="card">
+      <div class="icon">🔥</div>
+      <div class="title">Natural Gas</div>
+      <div class="subtitle">The "transition fuel." Pivotal in Europe's crisis after Russia-Ukraine war.</div>
+      <span class="tag red">Fossil</span><span class="tag blue">Lower CO₂ than coal</span>
+    </div>
+    <div class="card">
+      <div class="icon">☢️</div>
+      <div class="title">Nuclear</div>
+      <div class="subtitle">5% of global energy. Zero emissions in operation. Renaissance underway.</div>
+      <span class="tag green">Low carbon</span><span class="tag yellow">High capital cost</span>
+    </div>
+    <div class="card">
+      <div class="icon">☀️</div>
+      <div class="title">Solar PV</div>
+      <div class="subtitle">Fastest growing. Now cheapest form of electricity ever built in most regions.</div>
+      <span class="tag green">Renewable</span><span class="tag green">Falling costs</span>
+    </div>
+    <div class="card">
+      <div class="icon">💨</div>
+      <div class="title">Wind</div>
+      <div class="subtitle">Onshore = very cheap. Offshore = expensive but powerful near-shore cities.</div>
+      <span class="tag green">Renewable</span>
+    </div>
+    <div class="card">
+      <div class="icon">💧</div>
+      <div class="title">Hydropower</div>
+      <div class="subtitle">Oldest large-scale clean energy. Huge in Brazil, China, Canada, Norway.</div>
+      <span class="tag green">Renewable</span><span class="tag blue">Reliable baseload</span>
+    </div>
+    <div class="card">
+      <div class="icon">🌋</div>
+      <div class="title">Geothermal</div>
+      <div class="subtitle">Iceland runs on it. Niche globally but 24/7 clean baseload where available.</div>
+      <span class="tag green">Renewable</span>
+    </div>
+  </div>
+
+  <h2>Why This Matters for You</h2>
+  <p>The price of energy underpins everything: food prices (fertilisers need gas), transport costs, manufacturing, heating. When energy prices spike — as they did after the Ukraine war in 2022 — inflation affects every household on earth. When they fall, economies breathe. Understanding energy is understanding the modern world.</p>
+</section>
+
+<!-- ========== TYPES ========== -->
+<section id="types">
+  <h1>⚡ All Energy Types Explained</h1>
+  <p class="lead">From ancient coal to cutting-edge fusion — how each type works, where it comes from, and its place in the global mix.</p>
+
+  <h2>🪨 Coal</h2>
+  <p>Coal is fossilised plant matter compressed over millions of years. It's burned in power stations to heat water, create steam, and spin turbines. There are four grades: <strong>lignite</strong> (brown coal, lowest energy), <strong>sub-bituminous</strong>, <strong>bituminous</strong>, and <strong>anthracite</strong> (highest energy, cleanest burn).</p>
+  <p><strong>Where:</strong> China burns 67% of the world's coal. India is second. Poland and Germany are the EU's last major coal users. Australia, Indonesia, and Russia are the biggest exporters.</p>
+  <p><strong>Climate impact:</strong> Coal releases roughly <strong>820–1,000g CO₂ per kWh</strong> — twice that of natural gas. It's the single largest contributor to climate change.</p>
+  <div class="callout danger">
+    <div class="callout-title">⚠️ Coal in 2024</div>
+    Despite all transition pledges, coal hit a <strong>record global demand of 169 QBtu</strong> in 2024, up 3.2% per year since 2020. The reason: developing Asia, especially India and Southeast Asia, still builds coal plants for cheap electricity to industrialise.
+  </div>
+
+  <h2>🛢️ Oil / Petroleum</h2>
+  <p>Oil is crude petroleum — a mixture of hydrocarbons extracted from underground reservoirs. It's refined into gasoline, diesel, jet fuel, heating oil, and petrochemicals (plastics, fertilisers). Unlike coal and gas (mostly used for electricity), oil dominates <strong>transport</strong> — powering 90% of all vehicles globally.</p>
+  <p><strong>Extraction methods:</strong> conventional drilling, deep-sea drilling (Gulf of Mexico, North Sea), horizontal hydraulic fracturing ("fracking" — responsible for the US shale revolution), oil sands (Canada's Alberta).</p>
+  <p><strong>Key producers:</strong> USA (13.6 Mb/day — #1 in 2025), Russia (9.9), Saudi Arabia (9.5), Canada (4.9), Iraq (4.4), China (4.3).</p>
+  <p><strong>Price drivers:</strong> OPEC+ production decisions, geopolitical crises (wars, sanctions), dollar strength, US shale output, and global economic growth.</p>
+
+  <h2>🔥 Natural Gas</h2>
+  <p>Natural gas is primarily methane (CH₄), found in underground deposits often alongside oil. It's used for electricity generation, industrial heating, cooking, and as a chemical feedstock. It's the "cleanest" fossil fuel — emitting roughly <strong>450g CO₂/kWh</strong>, about half of coal.</p>
+  <p><strong>LNG (Liquefied Natural Gas):</strong> Gas is cooled to −162°C to become liquid, shrinking to 1/600th its volume for shipping. LNG tankers enabled a global gas market where previously gas was landlocked by pipelines. The US became the world's largest LNG exporter by 2023.</p>
+  <p><strong>The price disconnect:</strong> US gas (Henry Hub) trades at ~$3–4/MMBtu while European gas (TTF) trades at €30–50/MWh because Europe lost Russian pipeline gas and must compete for LNG cargoes globally.</p>
+
+  <h2>☢️ Nuclear Energy</h2>
+  <p>Nuclear power splits heavy atoms (usually uranium-235 or plutonium-239) in a process called <strong>fission</strong>. This releases enormous heat, which boils water to drive turbines. Nuclear produces <strong>zero CO₂ emissions</strong> during operation, runs 24/7 at ~90%+ capacity factor, and generates enormous energy density — one kilogram of uranium fuel contains as much energy as ~3,000 tonnes of coal.</p>
+  <p><strong>Types of reactors:</strong> Pressurised Water Reactors (PWRs, most common), Boiling Water Reactors (BWRs), CANDU (heavy water), Fast Breeder Reactors, and coming: Small Modular Reactors (SMRs).</p>
+  <p><strong>Countries leading:</strong> France (70% of electricity from nuclear), USA (largest fleet by output), China (aggressive expansion — world leader in new builds), South Korea, Canada.</p>
+  <div class="callout success">
+    <div class="callout-title">☢️ The Nuclear Renaissance</div>
+    After Fukushima (2011) caused a decade-long retreat, nuclear is back. The EU re-classified it as "green." Microsoft signed a deal to restart Three Mile Island. France is building new reactors. China is building faster than the rest of the world combined. SMRs promise lower costs.
+  </div>
+
+  <h2>☀️ Solar PV (Photovoltaic)</h2>
+  <p>Solar panels use the <strong>photovoltaic effect</strong> — photons of light knock electrons loose in silicon semiconductors, creating direct current (DC) electricity. An inverter converts this to AC for the grid. Solar panels have no moving parts, no fuel, near-zero operating cost, and a 25–30 year lifespan.</p>
+  <p><strong>Types:</strong> Monocrystalline silicon (most efficient, ~22%), Polycrystalline (~18%), Thin-film (flexible, cheaper), Bifacial (captures light on both sides), Perovskite (next-gen, under development).</p>
+  <p><strong>The cost revolution:</strong> Solar PV costs have fallen <strong>over 90%</strong> in the past 15 years. In 2010, solar cost ~$400/MWh. By 2025, utility-scale solar in sunny regions costs <strong>$37–55/MWh</strong> — cheaper than any fossil fuel plant ever built.</p>
+  <p><strong>Limitation:</strong> It only generates when the sun shines. This intermittency requires backup (batteries, gas, pumped hydro) and makes the grid more complex to manage. Negative electricity prices (you pay the grid to take electricity) now occur frequently in very sunny or windy periods.</p>
+
+  <h2>💨 Wind Energy</h2>
+  <p>Wind turbines convert kinetic energy of moving air into electricity. Blades turn a rotor → gearbox → generator. Modern turbines stand 100–200m tall with blade spans up to 270m (offshore). Wind is the single largest source of renewable electricity in the EU and in many US states.</p>
+  <p><strong>Onshore vs Offshore:</strong> Onshore is cheaper (~$37–86/MWh). Offshore costs more ($72–140/MWh) but winds are stronger and more consistent, and turbines can be much larger. UK, Germany, Denmark, and China lead in offshore wind.</p>
+
+  <h2>💧 Hydropower</h2>
+  <p>Hydropower harnesses the potential energy of water falling from height. Dams store water; it's released through turbines. It provides reliable, dispatchable, low-cost electricity and can act as a giant "battery" (pumped storage hydro) by pumping water uphill when electricity is cheap and releasing it when expensive.</p>
+  <p><strong>Largest plants:</strong> Three Gorges Dam (China, 22.5 GW), Itaipu (Brazil/Paraguay, 14 GW), Belo Monte (Brazil). Brazil generates ~65% of electricity from hydro. Norway and Iceland nearly 100%.</p>
+
+  <h2>🌿 Bioenergy</h2>
+  <p>Burning biological material (wood, agricultural waste, purpose-grown crops, landfill gas, biogas from organic waste). It's the largest renewable energy source in the EU by volume — mostly wood for heating. Controversial: large-scale biomass burning (like UK's Drax power station, which burns wood pellets shipped from North America) is disputed as genuinely "carbon neutral."</p>
+
+  <h2>🌋 Geothermal & Others</h2>
+  <p>Geothermal taps heat from the earth's crust. Iceland gets ~66% of its primary energy from geothermal and hydro combined. Kenya, the Philippines, and parts of the US (California, Nevada) use it. Tidal and wave power remain small-scale experiments. Hydrogen is growing as an industrial feedstock and potential fuel but is an energy <em>carrier</em>, not a source.</p>
+</section>
+
+<!-- ========== PRICES / LCOE ========== -->
+<section id="lcoe">
+  <h1>💰 Energy Prices & the Cost of Electricity</h1>
+  <p class="lead">Understanding LCOE — the true cost of electricity from any source — and how it compares globally.</p>
+
+  <h2>What Is LCOE?</h2>
+  <p><strong>Levelised Cost of Energy (LCOE)</strong> is the average cost per unit of electricity over a plant's lifetime, accounting for construction costs, financing, fuel, operations, and decommissioning. It's the most common way to compare energy sources fairly — even if they have wildly different cost structures (all upfront vs. all ongoing).</p>
+
+  <h2>🔑 2025 LCOE Comparison (New-Build, $/MWh)</h2>
+  <p style="color:var(--text2);font-size:0.85rem;margin-bottom:12px">Source: Lazard LCOE+ 2025, Wood Mackenzie 2025. Ranges vary by region, wind/sun availability, financing conditions.</p>
+
+  <div class="lcoe-chart">
+    <div class="lcoe-row">
+      <div class="lcoe-label">☀️ Utility Solar PV</div>
+      <div class="lcoe-bar-wrap">
+        <div class="lcoe-bar" style="width:28%;background:linear-gradient(90deg,#f4a261,#e76f51)">$38–120</div>
+      </div>
+      <div class="lcoe-value">$38–120</div>
+    </div>
+    <div class="lcoe-row">
+      <div class="lcoe-label">💨 Onshore Wind</div>
+      <div class="lcoe-bar-wrap">
+        <div class="lcoe-bar" style="width:26%;background:linear-gradient(90deg,#2ec4b6,#0e6ba8)">$37–86</div>
+      </div>
+      <div class="lcoe-value">$37–86</div>
+    </div>
+    <div class="lcoe-row">
+      <div class="lcoe-label">🔥 Gas Combined Cycle</div>
+      <div class="lcoe-bar-wrap">
+        <div class="lcoe-bar" style="width:38%;background:linear-gradient(90deg,#4a5568,#718096)">$48–109</div>
+      </div>
+      <div class="lcoe-value">$48–109</div>
+    </div>
+    <div class="lcoe-row">
+      <div class="lcoe-label">🌊 Offshore Wind</div>
+      <div class="lcoe-bar-wrap">
+        <div class="lcoe-bar" style="width:45%;background:linear-gradient(90deg,#0e6ba8,#0f3460)">$72–140</div>
+      </div>
+      <div class="lcoe-value">$72–140</div>
+    </div>
+    <div class="lcoe-row">
+      <div class="lcoe-label">🪨 Coal (new-build)</div>
+      <div class="lcoe-bar-wrap">
+        <div class="lcoe-bar" style="width:46%;background:linear-gradient(90deg,#3d2b1f,#5c4033)">$71–173</div>
+      </div>
+      <div class="lcoe-value">$71–173</div>
+    </div>
+    <div class="lcoe-row">
+      <div class="lcoe-label">☢️ Nuclear (new-build)</div>
+      <div class="lcoe-bar-wrap">
+        <div class="lcoe-bar" style="width:63%;background:linear-gradient(90deg,#0f3460,#1a4a8a)">$141–220</div>
+      </div>
+      <div class="lcoe-value">$141–220</div>
+    </div>
+    <div class="lcoe-row">
+      <div class="lcoe-label">🔥 Gas Peaking (backup)</div>
+      <div class="lcoe-bar-wrap">
+        <div class="lcoe-bar" style="width:78%;background:linear-gradient(90deg,#6b4226,#8b5e3c)">$149–251</div>
+      </div>
+      <div class="lcoe-value">$149–251</div>
+    </div>
+  </div>
+
+  <div class="callout success">
+    <div class="callout-title">✅ Key Insight: Renewables Are Cheapest</div>
+    According to Lazard's 2025 analysis, solar and wind have been the cheapest forms of <strong>new-build electricity</strong> for 10 consecutive years. Solar PV fell 90%+ in cost since 2010. Yet intermittency means you still need backup — so the total system cost is higher.
+  </div>
+
+  <h2>Household Electricity Prices (2025, $/kWh)</h2>
+  <table class="comp-table">
+    <tr>
+      <th>Country/Region</th>
+      <th>~Price ($/kWh)</th>
+      <th>Key Driver</th>
+    </tr>
+    <tr><td>🇩🇪 Germany</td><td>$0.35–0.42</td><td>High renewable surcharges, gas dependence</td></tr>
+    <tr><td>🇩🇰 Denmark</td><td>$0.35–0.40</td><td>High taxes, but wind-rich</td></tr>
+    <tr><td>🇬🇧 UK</td><td>$0.28–0.34</td><td>Gas dependence, network costs</td></tr>
+    <tr><td>🇮🇹 Italy</td><td>$0.28–0.35</td><td>High gas import reliance</td></tr>
+    <tr><td>🇫🇷 France</td><td>$0.20–0.26</td><td>Nuclear keeps costs low</td></tr>
+    <tr><td>🇺🇸 USA (avg)</td><td>$0.12–0.17</td><td>Gas abundance, deregulated markets</td></tr>
+    <tr><td>🇧🇷 Brazil</td><td>$0.10–0.14</td><td>Hydro dominance</td></tr>
+    <tr><td>🇨🇳 China</td><td>$0.07–0.10</td><td>State subsidies, coal base</td></tr>
+    <tr><td>🇮🇳 India</td><td>$0.07–0.09</td><td>Subsidised, coal-heavy</td></tr>
+    <tr><td>🇶🇦 Qatar</td><td>$0.02–0.03</td><td>Massive gas subsidies</td></tr>
+    <tr><td>🇷🇺 Russia</td><td>$0.02–0.04</td><td>State price controls, fossil wealth</td></tr>
+  </table>
+
+  <h2>Key Commodity Benchmarks (April 2026 context)</h2>
+  <div class="card-grid">
+    <div class="card">
+      <div class="icon">🛢️</div>
+      <div class="title">Brent Crude Oil</div>
+      <div class="subtitle">International benchmark. Tight correlation with OPEC+ decisions and global GDP.</div>
+      <span class="price-tag">~$65–80 / barrel (trending down from 2022 peak of $120+)</span>
+    </div>
+    <div class="card">
+      <div class="icon">🔥</div>
+      <div class="title">Henry Hub (US Natural Gas)</div>
+      <div class="subtitle">US domestic benchmark. Spiked in 2022, crashed in 2023, now rising again on LNG exports.</div>
+      <span class="price-tag">~$3–4 / MMBtu</span>
+    </div>
+    <div class="card">
+      <div class="icon">🔥</div>
+      <div class="title">TTF (European Gas)</div>
+      <div class="subtitle">European benchmark. Spiked to €300/MWh in 2022 after Russia cut gas. Now volatile €30–80.</div>
+      <span class="price-tag">~€35–60 / MWh</span>
+    </div>
+    <div class="card">
+      <div class="icon">🪨</div>
+      <div class="title">Coal (API2 benchmark)</div>
+      <div class="subtitle">European coal benchmark. Spiked 2022, now declining as renewables displace coal.</div>
+      <span class="price-tag">~$100–130 / tonne</span>
+    </div>
+  </div>
+</section>
+
+<!-- ========== PRODUCTION ========== -->
+<section id="production">
+  <h1>🏭 How Energy Is Produced</h1>
+  <p class="lead">From mine to megawatt — the full chain of energy production.</p>
+
+  <h2>The Universal Principle: Heat → Steam → Electricity</h2>
+  <p>About 80% of global electricity is generated through the same basic principle: <strong>burn/react something to make heat → heat water to steam → steam spins a turbine → turbine spins a generator</strong>. This applies to coal, gas, nuclear, and even concentrated solar (CSP). The fuel source differs; the machinery is essentially the same.</p>
+
+  <div class="callout">
+    <div class="callout-title">⚙️ The Three Exceptions</div>
+    Solar PV, wind, and hydropower do NOT use heat. Solar PV uses the photoelectric effect directly. Wind uses mechanical rotation. Hydro uses gravity and water movement. These are fundamentally different and have much lower conversion losses.
+  </div>
+
+  <h2>Coal-Fired Power Plants</h2>
+  <p>Coal is crushed into powder, blown into a boiler, and burned at 1,300°C+. This heats water in tubes surrounding the boiler into high-pressure steam. The steam spins a turbine connected to a generator. Efficiency of modern supercritical coal plants: ~42–46%. Older plants: 30–35%. The remainder is lost as waste heat.</p>
+
+  <h2>Gas-Fired Plants (CCGT)</h2>
+  <p>Combined Cycle Gas Turbines (CCGT) are the most efficient thermal plants. Natural gas is burned in a jet-engine-like turbine (first cycle). The hot exhaust gas then heats a steam boiler for a second steam cycle. Total efficiency: up to <strong>60–62%</strong>. Gas plants are also fast-starting — key for backing up intermittent renewables.</p>
+
+  <h2>Nuclear Reactors</h2>
+  <p>Uranium fuel pellets (ceramic, fingernail-sized) are stacked in fuel rods. Control rods (boron or hafnium) absorb neutrons to control the rate of fission. In a Pressurised Water Reactor (PWR): water under high pressure absorbs heat from the reactor core (primary circuit) → transfers heat through a heat exchanger to a secondary circuit → that water becomes steam → drives turbines. The radioactive primary water never touches the turbine.</p>
+  <p>One kg of uranium fuel = <strong>45,000 kWh</strong> of electricity. One kg of coal = ~3 kWh. This 15,000x difference in energy density is why nuclear power produces so little waste by volume.</p>
+
+  <h2>Solar PV Panels — How They're Made & How They Work</h2>
+  <p>Silicon is purified to 99.9999% purity (from ordinary sand/quartz). It's grown into large crystals, sliced into wafers ~180 micrometers thin, treated with phosphorus (n-type layer) and boron (p-type layer) to create a p-n junction. When photons hit this junction, they free electrons, creating current. Multiple cells → panel → array → inverter → grid.</p>
+  <p><strong>Manufacturing is dominated by China</strong>, which controls ~80-90% of global solar panel production. This creates supply chain dependency that is increasingly a geopolitical concern for the EU and US.</p>
+
+  <h2>Wind Turbines</h2>
+  <p>Blades (fibreglass/carbon composite, up to 107m long) rotate at 5–15 RPM. A gearbox multiplies this to 1,500 RPM for the generator. Modern turbines have variable-pitch blades that turn to face the wind (yaw system) and feather into the wind when it's too strong. Power output scales with the cube of wind speed — doubling wind speed gives 8x the power. The largest offshore turbines today (like Siemens Gamesa's 14MW or GE Haliade-X 15MW) can power ~14,000 homes each.</p>
+
+  <h2>The Grid: Keeping the Lights On</h2>
+  <p>The electricity grid is arguably the most complex machine ever built. It must balance supply and demand in <strong>real time</strong> — frequency deviation by more than 1% can damage equipment or cause blackouts. Grid operators use a "merit order" — cheapest generation runs first (renewables), then gas, then peaking plants — to minimise cost. With more intermittent renewables, grids need more <strong>flexibility</strong>: battery storage, pumped hydro, demand response, and interconnectors between regions.</p>
+</section>
+
+<!-- ========== EU ========== -->
+<section id="eu">
+  <h1>🇪🇺 The EU Energy Deep Dive</h1>
+  <p class="lead">27 countries, wildly different energy mixes, one market. Here's the full picture.</p>
+
+  <div class="stat-row">
+    <div class="stat-box">
+      <div class="num">71%</div>
+      <div class="lbl">Clean electricity in EU (2024)</div>
+    </div>
+    <div class="stat-box">
+      <div class="num">48%</div>
+      <div class="lbl">From renewables (2024)</div>
+    </div>
+    <div class="stat-box">
+      <div class="num">23%</div>
+      <div class="lbl">From nuclear (2024)</div>
+    </div>
+    <div class="stat-box">
+      <div class="num">&lt;10%</div>
+      <div class="lbl">From coal (2024) — 40yr low</div>
+    </div>
+  </div>
+
+  <h2>The 2024 EU Electricity Milestone</h2>
+  <p>In 2024, the EU achieved its cleanest electricity mix in decades. Clean sources (renewables + nuclear) reached <strong>71% of all electricity</strong>. Solar surpassed coal for the first time ever — providing 11% (304 TWh) vs coal's 9.8% (269 TWh). Wind + solar together hit a record <strong>29%</strong>. Fossil fuels fell to their lowest level in over 40 years.</p>
+
+  <h2>Country-by-Country EU Breakdown</h2>
+  <div class="region-grid">
+
+    <div class="region-card">
+      <div class="region-name"><span class="flag">🇫🇷</span> France</div>
+      <div class="mix-bars">
+        <div class="mix-row"><div class="mix-name"><span>Nuclear</span><span>~70%</span></div><div class="mix-bar-bg"><div class="mix-bar" style="width:70%;background:#0f3460"></div></div></div>
+        <div class="mix-row"><div class="mix-name"><span>Hydro</span><span>~12%</span></div><div class="mix-bar-bg"><div class="mix-bar" style="width:12%;background:#0e6ba8"></div></div></div>
+        <div class="mix-row"><div class="mix-name"><span>Wind+Solar</span><span>~14%</span></div><div class="mix-bar-bg"><div class="mix-bar" style="width:14%;background:#2ec4b6"></div></div></div>
+      </div>
+      <p style="font-size:0.82rem;color:var(--text2);margin-top:8px">World's largest nuclear share. Cheap electricity has historically made France a net exporter. EDF built 56 reactors in the 1970-80s. Suffered outages 2022 (corrosion), now recovering. Building new EPR2 reactors.</p>
+    </div>
+
+    <div class="region-card">
+      <div class="region-name"><span class="flag">🇩🇪</span> Germany</div>
+      <div class="mix-bars">
+        <div class="mix-row"><div class="mix-name"><span>Wind</span><span>~34%</span></div><div class="mix-bar-bg"><div class="mix-bar" style="width:34%;background:#2ec4b6"></div></div></div>
+        <div class="mix-row"><div class="mix-name"><span>Solar</span><span>~12%</span></div><div class="mix-bar-bg"><div class="mix-bar" style="width:12%;background:#f4a261"></div></div></div>
+        <div class="mix-row"><div class="mix-name"><span>Coal/Lignite</span><span>~26%</span></div><div class="mix-bar-bg"><div class="mix-bar" style="width:26%;background:#3d2b1f"></div></div></div>
+        <div class="mix-row"><div class="mix-name"><span>Gas</span><span>~13%</span></div><div class="mix-bar-bg"><div class="mix-bar" style="width:13%;background:#4a5568"></div></div></div>
+      </div>
+      <p style="font-size:0.82rem;color:var(--text2);margin-top:8px">The <strong>Energiewende</strong> (energy transition). Shut down all nuclear by April 2023 — controversial decision made after Fukushima (2011). World leader in wind and solar. Still burns a lot of coal (lignite), making its grid surprisingly carbon-intensive. Highest household electricity prices in the EU (~€0.35–0.40/kWh).</p>
+    </div>
+
+    <div class="region-card">
+      <div class="region-name"><span class="flag">🇪🇸</span> Spain</div>
+      <div class="mix-bars">
+        <div class="mix-row"><div class="mix-name"><span>Wind</span><span>~26%</span></div><div class="mix-bar-bg"><div class="mix-bar" style="width:26%;background:#2ec4b6"></div></div></div>
+        <div class="mix-row"><div class="mix-name"><span>Solar</span><span>~17%</span></div><div class="mix-bar-bg"><div class="mix-bar" style="width:17%;background:#f4a261"></div></div></div>
+        <div class="mix-row"><div class="mix-name"><span>Nuclear</span><span>~21%</span></div><div class="mix-bar-bg"><div class="mix-bar" style="width:21%;background:#0f3460"></div></div></div>
+        <div class="mix-row"><div class="mix-name"><span>Hydro</span><span>~14%</span></div><div class="mix-bar-bg"><div class="mix-bar" style="width:14%;background:#0e6ba8"></div></div></div>
+      </div>
+      <p style="font-size:0.82rem;color:var(--text2);margin-top:8px">Sun-rich Spain is a solar powerhouse and plans to phase out nuclear by 2035. Gas falling rapidly. In May 2024, Spain ran on 100% renewables for several hours. Planning to be the EU's green hydrogen exporter via the H2Med corridor to France.</p>
+    </div>
+
+    <div class="region-card">
+      <div class="region-name"><span class="flag">🇵🇱</span> Poland</div>
+      <div class="mix-bars">
+        <div class="mix-row"><div class="mix-name"><span>Coal</span><span>~57-61%</span></div><div class="mix-bar-bg"><div class="mix-bar" style="width:61%;background:#3d2b1f"></div></div></div>
+        <div class="mix-row"><div class="mix-name"><span>Wind+Solar</span><span>~23%</span></div><div class="mix-bar-bg"><div class="mix-bar" style="width:23%;background:#2ec4b6"></div></div></div>
+        <div class="mix-row"><div class="mix-name"><span>Gas</span><span>~9%</span></div><div class="mix-bar-bg"><div class="mix-bar" style="width:9%;background:#4a5568"></div></div></div>
+      </div>
+      <p style="font-size:0.82rem;color:var(--text2);margin-top:8px">The EU's coal laggard. Poland has major domestic coal mines and powerful coal unions. Transitioning slowly. Now building offshore wind in the Baltic. Poland and Germany together account for 73% of the EU's remaining coal generation. Coal share hit an all-time low of 57% in May 2024.</p>
+    </div>
+
+    <div class="region-card">
+      <div class="region-name"><span class="flag">🇳🇴</span> Norway (non-EU but EEA)</div>
+      <div class="mix-bars">
+        <div class="mix-row"><div class="mix-name"><span>Hydropower</span><span>~90%</span></div><div class="mix-bar-bg"><div class="mix-bar" style="width:90%;background:#0e6ba8"></div></div></div>
+        <div class="mix-row"><div class="mix-name"><span>Wind</span><span>~10%</span></div><div class="mix-bar-bg"><div class="mix-bar" style="width:10%;background:#2ec4b6"></div></div></div>
+      </div>
+      <p style="font-size:0.82rem;color:var(--text2);margin-top:8px">Norway is Europe's "battery" — its massive pumped-storage hydro capability stores water when power is cheap and releases it when expensive, balancing the grid for all of Europe. Paradoxically also the world's 3rd-largest oil exporter (North Sea), funding the world's largest sovereign wealth fund ($1.7 trillion).</p>
+    </div>
+
+    <div class="region-card">
+      <div class="region-name"><span class="flag">🇵🇹</span> Portugal</div>
+      <div class="mix-bars">
+        <div class="mix-row"><div class="mix-name"><span>Renewables</span><span>~78%</span></div><div class="mix-bar-bg"><div class="mix-bar" style="width:78%;background:#57cc99"></div></div></div>
+        <div class="mix-row"><div class="mix-name"><span>Gas</span><span>~15%</span></div><div class="mix-bar-bg"><div class="mix-bar" style="width:15%;background:#4a5568"></div></div></div>
+      </div>
+      <p style="font-size:0.82rem;color:var(--text2);margin-top:8px">A renewable success story. Wind, solar, and hydro cover most of demand. Portugal regularly runs on 100% renewables for days at a time. Closed its last coal plant in 2021. Aiming for 85% renewables by 2030. Starting to develop offshore wind and green hydrogen for export.</p>
+    </div>
+
+    <div class="region-card">
+      <div class="region-name"><span class="flag">🇸🇪</span> Sweden</div>
+      <div class="mix-bars">
+        <div class="mix-row"><div class="mix-name"><span>Nuclear</span><span>~42%</span></div><div class="mix-bar-bg"><div class="mix-bar" style="width:42%;background:#0f3460"></div></div></div>
+        <div class="mix-row"><div class="mix-name"><span>Hydro</span><span>~40%</span></div><div class="mix-bar-bg"><div class="mix-bar" style="width:40%;background:#0e6ba8"></div></div></div>
+        <div class="mix-row"><div class="mix-name"><span>Wind</span><span>~18%</span></div><div class="mix-bar-bg"><div class="mix-bar" style="width:18%;background:#2ec4b6"></div></div></div>
+      </div>
+      <p style="font-size:0.82rem;color:var(--text2);margin-top:8px">Sweden nearly decarbonised its grid. A mix of nuclear and hydro provides cheap, reliable clean power. Now reversing its nuclear phase-out and planning new reactors. Sweden leads EU in renewable energy share of <em>total energy</em> (not just electricity): 66% in 2023.</p>
+    </div>
+
+    <div class="region-card">
+      <div class="region-name"><span class="flag">🇮🇹</span> Italy</div>
+      <div class="mix-bars">
+        <div class="mix-row"><div class="mix-name"><span>Gas</span><span>~44%</span></div><div class="mix-bar-bg"><div class="mix-bar" style="width:44%;background:#4a5568"></div></div></div>
+        <div class="mix-row"><div class="mix-name"><span>Wind+Solar</span><span>~26%</span></div><div class="mix-bar-bg"><div class="mix-bar" style="width:26%;background:#2ec4b6"></div></div></div>
+        <div class="mix-row"><div class="mix-name"><span>Hydro</span><span>~16%</span></div><div class="mix-bar-bg"><div class="mix-bar" style="width:16%;background:#0e6ba8"></div></div></div>
+      </div>
+      <p style="font-size:0.82rem;color:var(--text2);margin-top:8px">Italy banned nuclear by referendum in 1987. Now has some of the most expensive electricity in Europe due to gas dependence. Has abundant solar potential (especially the south and Sicily). Gas generation falling as solar + wind expand. Italy now sources gas from Algeria, Azerbaijan, and LNG to replace Russian imports.</p>
+    </div>
+
+  </div>
+
+  <h2>The Russia-Ukraine Energy Shock in Europe</h2>
+  <p>Before February 2022, Russia supplied ~40% of Europe's gas and ~25% of its oil. The invasion transformed European energy policy overnight. Gas prices surged from ~€20/MWh to €350/MWh (August 2022) — a 17x spike. European governments spent an estimated <strong>€800 billion+</strong> on energy support measures to shield households and businesses.</p>
+  <p>The EU's response — <strong>REPowerEU</strong> — accelerated renewable deployment, diversified LNG imports (from US, Qatar, Norway), built regasification terminals in record time, and cut gas demand by ~15%. By 2024, the EU reduced Russian gas from 40% to under 8% of supply. The crisis effectively turbocharged the green transition by making energy independence a security priority, not just a climate one.</p>
+
+  <h2>EU Electricity Market Design</h2>
+  <p>The EU uses a "marginal pricing" system: electricity is priced at the cost of the <strong>last (most expensive) plant</strong> needed to meet demand. When renewables flood the market, prices crash (or go negative). When gas turbines are needed, all producers — including cheap renewables — earn the high gas price. This created massive windfall profits for renewable operators and nuclear plants during the 2022 gas crisis, while consumers suffered. The EU reformed this system in 2024 with new contracts-for-difference mechanisms to decouple renewable prices from gas.</p>
+</section>
+
+<!-- ========== REGIONS ========== -->
+<section id="regions">
+  <h1>🗺️ Global Energy: Region by Region</h1>
+  <p class="lead">How energy looks across every major region of the world — very different stories.</p>
+
+  <div class="region-grid">
+
+    <div class="region-card">
+      <div class="region-name"><span class="flag">🇺🇸</span> United States</div>
+      <div class="mix-bars">
+        <div class="mix-row"><div class="mix-name"><span>Natural Gas</span><span>~43%</span></div><div class="mix-bar-bg"><div class="mix-bar" style="width:43%;background:#4a5568"></div></div></div>
+        <div class="mix-row"><div class="mix-name"><span>Nuclear</span><span>~19%</span></div><div class="mix-bar-bg"><div class="mix-bar" style="width:19%;background:#0f3460"></div></div></div>
+        <div class="mix-row"><div class="mix-name"><span>Wind+Solar</span><span>~18%</span></div><div class="mix-bar-bg"><div class="mix-bar" style="width:18%;background:#2ec4b6"></div></div></div>
+        <div class="mix-row"><div class="mix-name"><span>Coal</span><span>~16%</span></div><div class="mix-bar-bg"><div class="mix-bar" style="width:16%;background:#3d2b1f"></div></div></div>
+      </div>
+      <p style="font-size:0.82rem;color:var(--text2);margin-top:8px">The US shale revolution made America the world's largest oil AND gas producer simultaneously — historically unprecedented. The Inflation Reduction Act (IRA, 2022) unleashed ~$370B in clean energy subsidies, driving record solar and wind deployment. US electricity prices are among the lowest in the developed world (~$0.12–0.17/kWh) due to cheap gas. Per capita energy use: 217 GJ — nearly 3x the global average.</p>
+      <span class="tag blue">World's #1 oil producer</span>
+      <span class="tag blue">World's #1 gas producer</span>
+      <span class="tag green">IRA driving clean boom</span>
+    </div>
+
+    <div class="region-card">
+      <div class="region-name"><span class="flag">🇨🇦</span> Canada</div>
+      <div class="mix-bars">
+        <div class="mix-row"><div class="mix-name"><span>Hydro</span><span>~60%</span></div><div class="mix-bar-bg"><div class="mix-bar" style="width:60%;background:#0e6ba8"></div></div></div>
+        <div class="mix-row"><div class="mix-name"><span>Nuclear</span><span>~14%</span></div><div class="mix-bar-bg"><div class="mix-bar" style="width:14%;background:#0f3460"></div></div></div>
+        <div class="mix-row"><div class="mix-name"><span>Wind+Solar</span><span>~12%</span></div><div class="mix-bar-bg"><div class="mix-bar" style="width:12%;background:#2ec4b6"></div></div></div>
+      </div>
+      <p style="font-size:0.82rem;color:var(--text2);margin-top:8px">Canada has one of the cleanest grids in the G7, dominated by hydro. Quebec is nearly 100% hydro. Yet Canada is also a major oil exporter — its oil sands in Alberta are among the world's largest reserves but also among the most carbon-intensive to extract. Canada is #4 global oil producer at 4.9 Mb/day.</p>
+    </div>
+
+    <div class="region-card">
+      <div class="region-name"><span class="flag">🌎</span> South America</div>
+      <div class="mix-bars">
+        <div class="mix-row"><div class="mix-name"><span>Hydro</span><span>~49%</span></div><div class="mix-bar-bg"><div class="mix-bar" style="width:49%;background:#0e6ba8"></div></div></div>
+        <div class="mix-row"><div class="mix-name"><span>Wind+Solar</span><span>~22%</span></div><div class="mix-bar-bg"><div class="mix-bar" style="width:22%;background:#2ec4b6"></div></div></div>
+        <div class="mix-row"><div class="mix-name"><span>Gas+Coal</span><span>~20%</span></div><div class="mix-bar-bg"><div class="mix-bar" style="width:20%;background:#4a5568"></div></div></div>
+      </div>
+      <p style="font-size:0.82rem;color:var(--text2);margin-top:8px"><strong>Brazil</strong> is the standout — ~65% hydro electricity, world's 3rd-largest biofuel producer (sugarcane ethanol), and now adding solar and wind rapidly. Brazil's demand grew 4.9% in 2024 mostly met by solar (+45%) and wind (+13%). <strong>Chile</strong> has world-class solar (Atacama Desert) and wind resources — LCOE for renewables here is among the lowest globally. <strong>Colombia</strong> and <strong>Venezuela</strong> sit atop huge oil reserves; Venezuela's production collapsed from political crisis. <strong>Argentina</strong> has Vaca Muerta, one of the world's largest shale gas and oil fields.</p>
+      <span class="tag green">Hydro-dominated</span>
+      <span class="tag green">Fast solar/wind growth</span>
+    </div>
+
+    <div class="region-card">
+      <div class="region-name"><span class="flag">🌍</span> Africa</div>
+      <div class="mix-bars">
+        <div class="mix-row"><div class="mix-name"><span>Fossil Fuels</span><span>~76%</span></div><div class="mix-bar-bg"><div class="mix-bar" style="width:76%;background:#3d2b1f"></div></div></div>
+        <div class="mix-row"><div class="mix-name"><span>Renewables</span><span>~24%</span></div><div class="mix-bar-bg"><div class="mix-bar" style="width:24%;background:#57cc99"></div></div></div>
+      </div>
+      <p style="font-size:0.82rem;color:var(--text2);margin-top:8px">Africa has a paradox: it sits on vast fossil fuel wealth yet 600 million people (~43% of its population) lack access to electricity. <strong>South Africa</strong> runs on 80%+ coal but is suffering chronic "load-shedding" blackouts (up to 12hrs/day) because its state utility Eskom is bankrupt. <strong>Nigeria</strong> is Africa's largest oil producer but has barely functional electricity. <strong>Ethiopia</strong> and <strong>Egypt</strong> are investing heavily in solar and hydro. The continent added only 4.7 GW of renewable capacity in 2024 — tiny compared to Asia's 413 GW. Per capita energy use: just 14 GJ — 15x less than North America.</p>
+      <span class="tag red">Energy poverty crisis</span>
+      <span class="tag yellow">Massive solar potential</span>
+    </div>
+
+    <div class="region-card">
+      <div class="region-name"><span class="flag">🌏</span> China</div>
+      <div class="mix-bars">
+        <div class="mix-row"><div class="mix-name"><span>Coal</span><span>~58%</span></div><div class="mix-bar-bg"><div class="mix-bar" style="width:58%;background:#3d2b1f"></div></div></div>
+        <div class="mix-row"><div class="mix-name"><span>Wind+Solar</span><span>~18%</span></div><div class="mix-bar-bg"><div class="mix-bar" style="width:18%;background:#2ec4b6"></div></div></div>
+        <div class="mix-row"><div class="mix-name"><span>Hydro</span><span>~13%</span></div><div class="mix-bar-bg"><div class="mix-bar" style="width:13%;background:#0e6ba8"></div></div></div>
+        <div class="mix-row"><div class="mix-name"><span>Nuclear</span><span>~5%</span></div><div class="mix-bar-bg"><div class="mix-bar" style="width:5%;background:#0f3460"></div></div></div>
+      </div>
+      <p style="font-size:0.82rem;color:var(--text2);margin-top:8px">The world's most complex energy story. China burns 67% of global coal but simultaneously installs more solar and wind than the rest of the world combined — in 2024, China added twice the renewable capacity of the US, EU, and India combined. China dominates solar panel manufacturing (80-90% of supply chain), wind turbines, batteries, and EVs. It's building nuclear faster than anyone — expected to surpass France's nuclear capacity by 2030. China is energy hungry (demand grew 4% in 2024) and deeply dependent on imported coal and oil, which is a strategic vulnerability driving its green push.</p>
+      <span class="tag red">#1 coal consumer</span>
+      <span class="tag green">#1 solar/wind installer</span>
+    </div>
+
+    <div class="region-card">
+      <div class="region-name"><span class="flag">🇮🇳</span> India</div>
+      <div class="mix-bars">
+        <div class="mix-row"><div class="mix-name"><span>Coal</span><span>~75%</span></div><div class="mix-bar-bg"><div class="mix-bar" style="width:75%;background:#3d2b1f"></div></div></div>
+        <div class="mix-row"><div class="mix-name"><span>Wind+Solar</span><span>~10%</span></div><div class="mix-bar-bg"><div class="mix-bar" style="width:10%;background:#2ec4b6"></div></div></div>
+        <div class="mix-row"><div class="mix-name"><span>Hydro</span><span>~8%</span></div><div class="mix-bar-bg"><div class="mix-bar" style="width:8%;background:#0e6ba8"></div></div></div>
+      </div>
+      <p style="font-size:0.82rem;color:var(--text2);margin-top:8px">India is the fastest growing large electricity market. 78% of electricity comes from fossil fuels, primarily coal, making it the world's 2nd most coal-dependent major economy. Yet solar is growing explosively — India's solar capacity went from near-zero to 90+ GW. With 1.4 billion people and per-capita electricity use at just 1.4 MWh (vs 7.1 MWh in China), India's energy demand will grow enormously. India refuses to commit to a coal phase-out, arguing rich nations industrialised on coal and developing nations have the same right.</p>
+    </div>
+
+    <div class="region-card">
+      <div class="region-name"><span class="flag">🇯🇵</span> Japan</div>
+      <div class="mix-bars">
+        <div class="mix-row"><div class="mix-name"><span>Gas+Coal+Oil</span><span>~69%</span></div><div class="mix-bar-bg"><div class="mix-bar" style="width:69%;background:#4a5568"></div></div></div>
+        <div class="mix-row"><div class="mix-name"><span>Solar</span><span>~11%</span></div><div class="mix-bar-bg"><div class="mix-bar" style="width:11%;background:#f4a261"></div></div></div>
+        <div class="mix-row"><div class="mix-name"><span>Nuclear</span><span>~8%</span></div><div class="mix-bar-bg"><div class="mix-bar" style="width:8%;background:#0f3460"></div></div></div>
+      </div>
+      <p style="font-size:0.82rem;color:var(--text2);margin-top:8px">Fukushima (2011) shut down almost all of Japan's 50 nuclear reactors overnight, forcing the world's 3rd largest economy to import massive quantities of LNG and coal. Electricity prices soared. Japan is now carefully restarting some reactors. Solar grew to 11% — impressive for a land-scarce island. Wind remains tiny despite large potential. Japan's per-capita electricity use (8.3 MWh) is among the world's highest, making its transition particularly challenging.</p>
+    </div>
+
+    <div class="region-card">
+      <div class="region-name"><span class="flag">🇸🇦</span> Middle East</div>
+      <div class="mix-bars">
+        <div class="mix-row"><div class="mix-name"><span>Gas+Oil</span><span>~96%</span></div><div class="mix-bar-bg"><div class="mix-bar" style="width:96%;background:#4a5568"></div></div></div>
+        <div class="mix-row"><div class="mix-name"><span>Renewables</span><span>~4%</span></div><div class="mix-bar-bg"><div class="mix-bar" style="width:4%;background:#57cc99"></div></div></div>
+      </div>
+      <p style="font-size:0.82rem;color:var(--text2);margin-top:8px">The Middle East has the world's lowest renewable electricity share (~4%) and burns mostly its own oil and gas for power — often at massively subsidised domestic prices. Saudi Arabia's NEOM mega-project includes a 100% renewable target. UAE built the Arab world's first nuclear plant (Barakah). Saudi Aramco continues to be the world's most profitable company. The region's energy wealth funds both massive sovereign investment funds and geopolitical influence.</p>
+      <span class="tag yellow">Diversifying slowly</span>
+    </div>
+
+    <div class="region-card">
+      <div class="region-name"><span class="flag">🇦🇺</span> Oceania / Australia</div>
+      <div class="mix-bars">
+        <div class="mix-row"><div class="mix-name"><span>Renewables</span><span>~41%</span></div><div class="mix-bar-bg"><div class="mix-bar" style="width:41%;background:#57cc99"></div></div></div>
+        <div class="mix-row"><div class="mix-name"><span>Coal+Gas</span><span>~58%</span></div><div class="mix-bar-bg"><div class="mix-bar" style="width:58%;background:#3d2b1f"></div></div></div>
+      </div>
+      <p style="font-size:0.82rem;color:var(--text2);margin-top:8px">Australia is the world's largest coal exporter and a top LNG exporter — yet experiencing one of the world's fastest renewable transitions domestically. South Australia achieved 25% negative-price electricity hours in 2024 due to solar/wind oversupply. The country is building massive battery storage (including the world's largest, in Victoria). Australian households are installing rooftop solar at the world's fastest per-capita rate. New Zealand is 85% renewable.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ========== GEOPOLITICS ========== -->
+<section id="geopolitics">
+  <h1>🌐 Energy, Geopolitics & Macro Events</h1>
+  <p class="lead">Why energy prices are really a story of wars, politics, pandemics, and power.</p>
+
+  <h2>The Oil Price Story: A Timeline of Shocks</h2>
+
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-dot">73</div>
+      <div class="tl-content">
+        <div class="tl-year">1973</div>
+        <div class="tl-title">Arab Oil Embargo — The First Energy Crisis</div>
+        <div class="tl-text">OPEC Arab members embargo the US and Western allies for supporting Israel in the Yom Kippur War. Oil price quadruples from $3 to $12/barrel overnight. Long queues at petrol stations across America. Permanent realisation that cheap energy could not be taken for granted. Led to the creation of the IEA (International Energy Agency) to coordinate Western energy security.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot">79</div>
+      <div class="tl-content">
+        <div class="tl-year">1979</div>
+        <div class="tl-title">Iranian Revolution + Second Oil Crisis</div>
+        <div class="tl-text">Iran's Islamic Revolution removes the Shah; oil production collapses. Prices double again, reaching $35/barrel (equivalent to ~$130 in 2024 dollars). The Iran-Iraq War (1980–88) further destabilises the Gulf. Western economies suffer stagflation — simultaneous inflation and recession. Nuclear power's expansion accelerates in France and elsewhere as energy security imperative.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot">91</div>
+      <div class="tl-content">
+        <div class="tl-year">1990–91</div>
+        <div class="tl-title">Gulf War — Iraq Invades Kuwait</div>
+        <div class="tl-text">Iraq's invasion of Kuwait triggers oil price spike from $17 to $36/barrel. US-led coalition restores Kuwaiti sovereignty. Oil fields set ablaze by retreating Iraqi forces. Western powers cement their strategic commitment to securing Gulf oil routes. Middle East becomes permanently militarised energy chessboard.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot">98</div>
+      <div class="tl-content">
+        <div class="tl-year">1998–99</div>
+        <div class="tl-title">Asian Financial Crisis — Oil Crashes to $10</div>
+        <div class="tl-text">Asian economies collapse. Oil demand collapses. OPEC fails to cut production adequately. Oil briefly touches $10/barrel — lower in real terms than 1973. Russia defaults on debt. Petrostate economies crushed. Shows that demand destruction can be as powerful as supply shocks.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot">08</div>
+      <div class="tl-content">
+        <div class="tl-year">2008</div>
+        <div class="tl-title">Financial Crisis — Oil Spikes to $147, Then Crashes to $32</div>
+        <div class="tl-text">The commodity supercycle driven by China's industrialisation pushes oil to record $147/barrel in July 2008. Then the global financial crisis destroys demand. Oil falls to $32 by December 2008 — a $115 collapse in 5 months. Shows the extreme sensitivity of commodity prices to macro conditions. Natural gas follows a similar but less extreme path.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot">14</div>
+      <div class="tl-content">
+        <div class="tl-year">2014–16</div>
+        <div class="tl-title">The Shale Revolution & OPEC's War on Frackers</div>
+        <div class="tl-text">US shale oil/gas production explodes thanks to horizontal drilling + hydraulic fracturing. By 2014, US oil output exceeds Saudi Arabia's. OPEC, led by Saudi Arabia, deliberately pumps more oil (instead of cutting) to crash prices and bankrupt US shale producers. Oil falls from $110 to $27/barrel. Many shale companies go bankrupt — but the industry survives, restructured. The US becomes the world's largest oil producer.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot">20</div>
+      <div class="tl-content">
+        <div class="tl-year">2020</div>
+        <div class="tl-title">COVID-19 Pandemic — The Unprecedented Demand Collapse</div>
+        <div class="tl-text">Lockdowns worldwide destroy demand for oil virtually overnight. In April 2020, US oil futures briefly went <strong>negative</strong> (−$37/barrel) — meaning producers paid people to take oil because storage was completely full. Global energy demand fell by 4% — the largest single-year drop ever. Oil price war between Saudi Arabia and Russia worsened the glut. Coal, gas, and electricity prices all cratered. Renewables were the only sector that continued growing. The pandemic also revealed the fragility of global supply chains, laying groundwork for post-pandemic inflation.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot">21</div>
+      <div class="tl-content">
+        <div class="tl-year">2021</div>
+        <div class="tl-title">Post-COVID Demand Surge — Energy Crunch Begins</div>
+        <div class="tl-text">Economies reopen faster than energy supply can respond. Underinvestment in fossil fuels during COVID, combined with a cold winter and low wind/hydro output, causes an energy crunch. Gas prices in Europe begin rising sharply. Electricity prices follow. Coal demand surges as gas becomes expensive. First warning signs of Europe's vulnerability to Russian gas.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot">22</div>
+      <div class="tl-content">
+        <div class="tl-year">2022</div>
+        <div class="tl-title">Russia Invades Ukraine — The Most Severe Energy Shock Since 1973</div>
+        <div class="tl-text">Russia cuts gas supplies to Europe (first partially, then massively through deliberate sabotage arguments). European TTF gas hits €350/MWh — a 17x increase from 2021 norms. Oil briefly tops $130/barrel. European electricity prices become the most expensive in the world. Inflation surges to 8–11% across Europe. EU governments spend ~€800 billion in energy support measures. Germany reconsidered closing its last nuclear plants (briefly extended). The crisis permanently reshaped the geopolitics of energy: Europe's energy dependence on Russia became its greatest strategic vulnerability. The energy system's exposure to geopolitical risk became undeniable.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot">23</div>
+      <div class="tl-content">
+        <div class="tl-year">2023–24</div>
+        <div class="tl-title">Price Normalisation, but With New Vulnerabilities</div>
+        <div class="tl-text">Energy prices moderate. EU has diversified gas supply, built LNG terminals, and filled storage. But European gas prices remain 2–3x US prices — a permanent competitiveness disadvantage. Middle East conflict (Israel-Gaza, Houthi attacks on Red Sea shipping) disrupts trade routes. EU industries increasingly relocate to the US (cheap energy + IRA subsidies) in a phenomenon called "deindustrialisation." The global energy commodity price index fell from its 2022 peak but remains above pre-COVID levels.</div>
+      </div>
+    </div>
+  </div>
+
+  <h2>OPEC+ and the Global Oil Cartel</h2>
+  <p>OPEC (Organisation of Petroleum Exporting Countries) was founded in 1960 by Iran, Iraq, Kuwait, Saudi Arabia, and Venezuela. Today OPEC+ includes Russia, Kazakhstan, and others — controlling about 40% of global oil output and 80% of proven reserves. When OPEC+ cuts production, prices rise. When they flood the market, prices fall. Their decisions are explicitly geopolitical — rewarding allies, punishing adversaries, funding state budgets.</p>
+  <p>Saudi Arabia needs oil at ~$70–80/barrel to balance its state budget. Russia needs it at ~$60–70. The US shale industry breaks even at ~$40–50. These "fiscal breakevens" create the real floor for oil prices.</p>
+
+  <h2>The Petrodollar System</h2>
+  <p>Since 1973, oil has been traded globally in US dollars. This means every country needs dollars to buy oil — creating permanent global demand for the dollar, underpinning US financial hegemony. Any attempt to price oil in other currencies (yuan, euro) is a direct challenge to US power. Saudi Arabia has recently begun exploring yuan-denominated oil trades with China — watched closely by geopolitical analysts.</p>
+
+  <h2>Energy Sanctions as a Geopolitical Weapon</h2>
+  <p>Western sanctions on Russia cut off its access to oil service technology, limiting production growth. Russian oil is now sold at a discount (the "Urals discount") to India, China, and Turkey. Iran has been under oil sanctions for decades — yet still exports oil covertly. Venezuela's production collapsed partly due to sanctions and partly due to regime mismanagement. Energy sanctions are powerful but blunt instruments with widespread civilian impacts.</p>
+
+  <h2>The AI & Data Center Energy Boom (2024–)</h2>
+  <div class="callout warn">
+    <div class="callout-title">🤖 A New Energy Shock: AI</div>
+    Data center electricity demand is expected to <strong>double between 2024 and 2030</strong>, driven primarily by AI. Microsoft, Google, Amazon, and Meta are signing nuclear power deals at scale (including restarting Three Mile Island). The US PJM grid region (serving 65 million people) saw capacity auction prices spike 800% in 2024 due to data center demand. The AI revolution is reversing decades of efficiency improvements in energy intensity.
+  </div>
+</section>
+
+<!-- ========== FUTURE ========== -->
+<section id="future">
+  <h1>🔮 The Future of Energy</h1>
+  <p class="lead">Where we are, where we're going, and what it means.</p>
+
+  <h2>The Energy Trilemma</h2>
+  <p>Every country must balance three competing energy goals simultaneously — the <strong>energy trilemma</strong>:</p>
+  <div class="card-grid">
+    <div class="card">
+      <div class="icon">🌿</div>
+      <div class="title">Sustainability</div>
+      <div class="subtitle">Decarbonising to limit climate change. Net zero by 2050 requires unprecedented speed.</div>
+    </div>
+    <div class="card">
+      <div class="icon">🔒</div>
+      <div class="title">Security</div>
+      <div class="subtitle">Ensuring reliable supply, reducing import dependence (as Europe learned painfully in 2022).</div>
+    </div>
+    <div class="card">
+      <div class="icon">💶</div>
+      <div class="title">Affordability</div>
+      <div class="subtitle">Keeping energy affordable for households and businesses — especially in developing nations.</div>
+    </div>
+  </div>
+
+  <h2>Where Is the World Going?</h2>
+  <p>The evidence is clear: the energy transition is real, rapid, and irreversible. In 2024, renewables accounted for 38% of global energy supply growth, ahead of any fossil fuel. Solar and wind grew 16%. China alone added twice the renewable capacity of the US + EU + India combined.</p>
+  <p>However, total fossil fuel demand is still rising in absolute terms, because global energy demand is growing faster than renewables can displace existing use. The 1.5°C climate goal is now considered by most analysts to be out of reach. The realistic target is staying below 2°C, requiring massive acceleration of the transition.</p>
+
+  <h2>What the Transition Requires</h2>
+  <table class="comp-table">
+    <tr>
+      <th>Challenge</th>
+      <th>Current State</th>
+      <th>What's Needed</th>
+    </tr>
+    <tr>
+      <td>Grid storage</td>
+      <td>~1,500 GWh globally</td>
+      <td>50x increase by 2040 to handle solar/wind intermittency</td>
+    </tr>
+    <tr>
+      <td>Grids / transmission</td>
+      <td>Often decades old, undersized</td>
+      <td>Triple grid investment; massive permitting reform needed</td>
+    </tr>
+    <tr>
+      <td>Green hydrogen</td>
+      <td>Tiny, expensive ($5–8/kg)</td>
+      <td>Scale for hard-to-electrify industries (steel, cement, aviation)</td>
+    </tr>
+    <tr>
+      <td>Nuclear</td>
+      <td>5% global energy, shrinking</td>
+      <td>SMRs + new large plants needed for 24/7 clean baseload</td>
+    </tr>
+    <tr>
+      <td>Critical minerals</td>
+      <td>Lithium, cobalt, copper concentrated in few nations</td>
+      <td>Mine permitting, recycling, substitution to avoid new dependencies</td>
+    </tr>
+    <tr>
+      <td>Developing world</td>
+      <td>600M in Africa without electricity</td>
+      <td>Leapfrog to distributed solar; international finance</td>
+    </tr>
+  </table>
+
+  <h2>The New Geopolitical Contest</h2>
+  <p>The 20th century's energy geopolitics was about controlling oil fields. The 21st century's will be about controlling the <strong>clean energy supply chain</strong>: solar panels (China ~85%), batteries (China ~75%), wind turbines, and critical minerals (lithium from Chile/Australia/Argentina, cobalt from Congo, rare earths from China). The US, EU, and others are trying to de-risk these supply chains through the IRA, European Green Deal, and trade policies — with limited success so far.</p>
+
+  <div class="callout success">
+    <div class="callout-title">🌟 The Optimistic View</div>
+    Solar costs fell 90% in 15 years. Battery costs fell 97% since 1991. Wind costs halved. The cost curves are still declining. Renewables are now cheaper than any fossil fuel in most of the world. The energy transition, for the first time, is not just an environmental imperative — it's economically rational. Countries that lead it will have cheaper energy, more energy independence, and new industries.
+  </div>
+
+  <div class="callout danger">
+    <div class="callout-title">⚠️ The Sobering Reality</div>
+    Fossil fuels still provide 86% of global energy. Coal hit record demand in 2024. Global emissions exceeded 40 GtCO₂e. The energy system is immense and changes slowly. Even in the most optimistic scenarios, oil and gas will still be significant in 2050. The transition requires not just technology but political will, financing, and international cooperation — all under severe strain.
+  </div>
+
+  <h2>Technologies to Watch</h2>
+  <div class="card-grid">
+    <div class="card">
+      <div class="icon">⚛️</div>
+      <div class="title">Small Modular Reactors (SMRs)</div>
+      <div class="subtitle">Factory-built nuclear units of 50–300 MW. Could decarbonise industrial heat and remote grids. First commercial SMRs expected 2028–2032. Still more expensive than solar/wind but offer 24/7 clean power.</div>
+      <span class="tag blue">In development</span>
+    </div>
+    <div class="card">
+      <div class="icon">🔋</div>
+      <div class="title">Grid-Scale Batteries</div>
+      <div class="subtitle">4-hour, 8-hour, and soon 24-hour batteries solve solar/wind intermittency. Costs fell 40%+ in 2024 alone. Australia leading real-world deployment.</div>
+      <span class="tag green">Rapidly scaling</span>
+    </div>
+    <div class="card">
+      <div class="icon">🌊</div>
+      <div class="title">Green Hydrogen</div>
+      <div class="subtitle">Electrolysis splits water into hydrogen using renewable electricity. Can decarbonise shipping, steel, chemicals. Still expensive. Projects emerging in Australia, Chile, Namibia, Saudi Arabia.</div>
+      <span class="tag yellow">Expensive but promising</span>
+    </div>
+    <div class="card">
+      <div class="icon">☀️</div>
+      <div class="title">Perovskite Solar</div>
+      <div class="subtitle">Next-generation solar cells, potentially 30%+ efficiency at very low cost. Could make solar even cheaper. Commercialisation expected in the late 2020s.</div>
+      <span class="tag yellow">Near-term breakthrough</span>
+    </div>
+    <div class="card">
+      <div class="icon">🌋</div>
+      <div class="title">Enhanced Geothermal</div>
+      <div class="subtitle">Drilling deep enough anywhere to access geothermal heat — not just volcanic regions. Quaise Energy and others pursuing this. If successful, near-unlimited 24/7 clean power anywhere on earth.</div>
+      <span class="tag blue">Long-term potential</span>
+    </div>
+    <div class="card">
+      <div class="icon">🌟</div>
+      <div class="title">Nuclear Fusion</div>
+      <div class="subtitle">Joins atoms instead of splitting them. Zero waste, effectively unlimited fuel (hydrogen). NIF achieved ignition in 2022 (energy out &gt; energy in). Commercial fusion: 2040s at earliest, if ever. The "always 20 years away" joke may finally be becoming wrong.</div>
+      <span class="tag red">Long-term wildcard</span>
+    </div>
+  </div>
+
+  <hr>
+  <p style="color:var(--text2);font-size:0.85rem;text-align:center">Data sources: IEA, Ember Energy, Eurostat, Energy Institute Statistical Review 2025, IRENA, Lazard LCOE+ 2025, Wood Mackenzie, S&P Global Commodity Insights, BNEF. Data current as of early 2026.</p>
+</section>
+
+<script>
+  function show(id) {
+    document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    const idx = ['intro','types','lcoe','production','eu','regions','geopolitics','future'].indexOf(id);
+    document.querySelectorAll('nav button')[idx].classList.add('active');
+    window.scrollTo(0, 0);
+  }
+</script>
+
+</body>
+</html>

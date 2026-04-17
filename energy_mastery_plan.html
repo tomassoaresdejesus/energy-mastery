@@ -1,0 +1,1236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Energy Mastery — 4-Month Plan</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a0a;
+  --surface: #111111;
+  --surface2: #1a1a1a;
+  --border: #252525;
+  --text: #f0ece4;
+  --text2: #7a7570;
+  --text3: #4a4540;
+  --m1: #e8c547;   /* month 1 - yellow */
+  --m2: #e87d47;   /* month 2 - orange */
+  --m3: #47b8e8;   /* month 3 - blue */
+  --m4: #7be870;   /* month 4 - green */
+  --accent: #e8c547;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 300;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* NOISE OVERLAY */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 999;
+  opacity: 0.4;
+}
+
+/* HEADER */
+header {
+  padding: 60px 40px 40px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.header-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  color: var(--text2);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+h1 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(4rem, 10vw, 8rem);
+  letter-spacing: 0.04em;
+  line-height: 0.9;
+  margin-bottom: 4px;
+}
+
+.title-line2 {
+  color: var(--m1);
+}
+
+.subtitle {
+  font-size: 1rem;
+  color: var(--text2);
+  margin-top: 20px;
+  max-width: 600px;
+  font-weight: 300;
+  font-style: italic;
+}
+
+/* PROGRESS TRACKER */
+.progress-bar-wrap {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 40px 40px;
+}
+
+.overall-progress {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 12px;
+}
+
+.progress-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  color: var(--text2);
+  text-transform: uppercase;
+  flex-shrink: 0;
+  width: 100px;
+}
+
+.progress-track {
+  flex: 1;
+  height: 6px;
+  background: var(--surface2);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.6s ease;
+}
+
+.progress-pct {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--text2);
+  width: 40px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+/* MONTH TABS */
+.month-tabs {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 40px;
+  display: flex;
+  gap: 8px;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+}
+
+.month-tab {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 10px 20px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text2);
+  cursor: pointer;
+  border-radius: 2px;
+  transition: all 0.2s;
+}
+.month-tab:hover { color: var(--text); border-color: var(--text3); }
+.month-tab.active { color: var(--bg); font-weight: 500; }
+.month-tab[data-m="1"].active { background: var(--m1); border-color: var(--m1); }
+.month-tab[data-m="2"].active { background: var(--m2); border-color: var(--m2); }
+.month-tab[data-m="3"].active { background: var(--m3); border-color: var(--m3); }
+.month-tab[data-m="4"].active { background: var(--m4); border-color: var(--m4); }
+.month-tab[data-m="all"].active { background: var(--text); border-color: var(--text); }
+
+/* CONTENT */
+.content {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 40px 100px;
+}
+
+/* MONTH SECTION */
+.month-section { display: none; }
+.month-section.active { display: block; }
+
+.month-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 32px;
+  margin-bottom: 40px;
+  padding-bottom: 32px;
+  border-bottom: 1px solid var(--border);
+}
+
+.month-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 7rem;
+  line-height: 1;
+  opacity: 0.12;
+  flex-shrink: 0;
+}
+
+.month-info { flex: 1; }
+
+.month-badge {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border-radius: 2px;
+  display: inline-block;
+  margin-bottom: 12px;
+  font-weight: 500;
+}
+
+.month-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.8rem;
+  letter-spacing: 0.06em;
+  line-height: 1;
+  margin-bottom: 12px;
+}
+
+.month-desc {
+  font-size: 0.92rem;
+  color: var(--text2);
+  max-width: 640px;
+  font-style: italic;
+}
+
+.month-outcome {
+  margin-top: 14px;
+  font-size: 0.85rem;
+  color: var(--text);
+  background: var(--surface);
+  border-left: 3px solid;
+  padding: 10px 16px;
+  border-radius: 0 4px 4px 0;
+  display: inline-block;
+}
+
+/* WEEKS GRID */
+.weeks-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(460px, 1fr));
+  gap: 16px;
+  margin-bottom: 40px;
+}
+
+.week-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 24px;
+  position: relative;
+  transition: border-color 0.2s;
+}
+.week-card:hover { border-color: var(--text3); }
+.week-card.done { opacity: 0.6; }
+.week-card.done .week-title { text-decoration: line-through; text-decoration-color: var(--text3); }
+
+.week-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text3);
+  margin-bottom: 8px;
+}
+
+.week-title {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 700;
+  font-size: 1.05rem;
+  margin-bottom: 12px;
+  line-height: 1.3;
+}
+
+.week-topics { margin-bottom: 14px; }
+
+.topic-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: color 0.15s;
+}
+.topic-item:last-child { border-bottom: none; }
+.topic-item:hover { color: var(--accent); }
+
+.topic-check {
+  width: 16px;
+  height: 16px;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  flex-shrink: 0;
+  margin-top: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  transition: all 0.15s;
+}
+.topic-item.checked .topic-check {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--bg);
+}
+.topic-item.checked > span { color: var(--text3); text-decoration: line-through; }
+
+.week-resources {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+}
+
+.resources-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text3);
+  margin-bottom: 6px;
+}
+
+.resource-item {
+  font-size: 0.78rem;
+  color: var(--text2);
+  padding: 2px 0;
+  display: flex;
+  gap: 6px;
+  align-items: baseline;
+}
+.resource-item::before { content: '→'; color: var(--text3); flex-shrink: 0; }
+
+.week-goal {
+  font-size: 0.8rem;
+  color: var(--text2);
+  font-style: italic;
+  margin-top: 12px;
+  padding: 8px 12px;
+  background: var(--surface2);
+  border-radius: 3px;
+}
+
+/* DAILY SCHEDULE */
+.daily-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 28px;
+  margin-bottom: 32px;
+}
+
+.daily-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.6rem;
+  letter-spacing: 0.08em;
+  margin-bottom: 20px;
+  color: var(--text2);
+}
+
+.daily-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 12px;
+}
+
+.daily-slot {
+  background: var(--surface2);
+  border-radius: 3px;
+  padding: 14px;
+}
+
+.slot-time {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  color: var(--text3);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.slot-activity {
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.slot-duration {
+  font-size: 0.75rem;
+  color: var(--text2);
+  margin-top: 4px;
+}
+
+/* BOOK LIST */
+.books-section {
+  margin-top: 40px;
+  padding-top: 32px;
+  border-top: 1px solid var(--border);
+}
+
+.books-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.8rem;
+  letter-spacing: 0.08em;
+  margin-bottom: 20px;
+  color: var(--text2);
+}
+
+.books-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 12px;
+}
+
+.book-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 18px;
+}
+
+.book-phase {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text3);
+  margin-bottom: 8px;
+}
+
+.book-title {
+  font-weight: 500;
+  font-size: 0.9rem;
+  margin-bottom: 4px;
+  line-height: 1.3;
+}
+
+.book-author {
+  font-size: 0.78rem;
+  color: var(--text2);
+  margin-bottom: 6px;
+}
+
+.book-why {
+  font-size: 0.78rem;
+  color: var(--text3);
+  font-style: italic;
+}
+
+/* ALL VIEW */
+.all-view { display: none; }
+.all-view.active { display: block; }
+
+.timeline-all {
+  position: relative;
+  padding-left: 40px;
+}
+
+.timeline-all::before {
+  content: '';
+  position: absolute;
+  left: 7px;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--border);
+}
+
+.tl-month {
+  margin-bottom: 48px;
+}
+
+.tl-month-dot {
+  position: absolute;
+  left: 0;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  margin-top: 6px;
+}
+
+.tl-month-head {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.4rem;
+  letter-spacing: 0.08em;
+  margin-bottom: 16px;
+}
+
+.tl-weeks {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+.tl-week {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 12px;
+  font-size: 0.8rem;
+}
+
+.tl-week-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.62rem;
+  color: var(--text3);
+  margin-bottom: 5px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.tl-week-title { font-weight: 500; line-height: 1.3; }
+
+/* CHECKMARK */
+.done-check {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  transition: all 0.2s;
+}
+.done-check:hover { border-color: var(--m4); color: var(--m4); }
+.done-check.done { background: var(--m4); border-color: var(--m4); color: var(--bg); }
+
+/* RESPONSIVE */
+@media (max-width: 700px) {
+  header, .progress-bar-wrap, .month-tabs, .content { padding-left: 20px; padding-right: 20px; }
+  h1 { font-size: 3.5rem; }
+  .month-header { flex-direction: column; gap: 16px; }
+  .month-num { font-size: 4rem; }
+  .weeks-grid { grid-template-columns: 1fr; }
+  .tl-weeks { grid-template-columns: 1fr 1fr; }
+  .daily-grid { grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <p style="font-family:'DM Mono',monospace;font-size:0.75rem;color:var(--text2);margin-bottom:24px;letter-spacing:0.05em;">Welcome to Tomás Soares de Jesus, energy master page</p>
+  <div class="header-eyebrow">⚡ 4-Month Curriculum · From Zero to Expert</div>
+  <h1>ENERGY<br><span class="title-line2">MASTERY</span></h1>
+  <p class="subtitle">A structured programme to go from curious generalist to genuine expert in global energy markets, geopolitics, and the energy transition.</p>
+</header>
+
+<div class="progress-bar-wrap">
+  <div class="overall-progress">
+    <span class="progress-label">M1 · Foundations</span>
+    <div class="progress-track"><div class="progress-fill" id="p1" style="width:0%;background:var(--m1)"></div></div>
+    <span class="progress-pct" id="pp1">0%</span>
+  </div>
+  <div class="overall-progress">
+    <span class="progress-label">M2 · Markets</span>
+    <div class="progress-track"><div class="progress-fill" id="p2" style="width:0%;background:var(--m2)"></div></div>
+    <span class="progress-pct" id="pp2">0%</span>
+  </div>
+  <div class="overall-progress">
+    <span class="progress-label">M3 · Geopolitics</span>
+    <div class="progress-track"><div class="progress-fill" id="p3" style="width:0%;background:var(--m3)"></div></div>
+    <span class="progress-pct" id="pp3">0%</span>
+  </div>
+  <div class="overall-progress">
+    <span class="progress-label">M4 · Mastery</span>
+    <div class="progress-track"><div class="progress-fill" id="p4" style="width:0%;background:var(--m4)"></div></div>
+    <span class="progress-pct" id="pp4">0%</span>
+  </div>
+</div>
+
+<div class="month-tabs">
+  <button class="month-tab active" data-m="all" onclick="showSection('all')">All Months</button>
+  <button class="month-tab" data-m="1" onclick="showSection(1)">Month 1 · Foundations</button>
+  <button class="month-tab" data-m="2" onclick="showSection(2)">Month 2 · Markets</button>
+  <button class="month-tab" data-m="3" onclick="showSection(3)">Month 3 · Geopolitics</button>
+  <button class="month-tab" data-m="4" onclick="showSection(4)">Month 4 · Mastery</button>
+</div>
+
+<div class="content">
+
+<!-- ALL VIEW -->
+<div class="all-view active" id="section-all">
+
+  <div class="daily-box">
+    <div class="daily-title">Daily Study Rhythm (1.5 – 2 hrs / day)</div>
+    <div class="daily-grid">
+      <div class="daily-slot">
+        <div class="slot-time">Morning · 30 min</div>
+        <div class="slot-activity">Read news + 1 article</div>
+        <div class="slot-duration">FT Energy, Bloomberg NEF, Reuters Energy, Carbon Brief</div>
+      </div>
+      <div class="daily-slot">
+        <div class="slot-time">Core · 45–60 min</div>
+        <div class="slot-activity">Deep study session</div>
+        <div class="slot-duration">Books, reports, structured learning for that week's topic</div>
+      </div>
+      <div class="daily-slot">
+        <div class="slot-time">Evening · 20 min</div>
+        <div class="slot-activity">Podcast or video</div>
+        <div class="slot-duration">Odd Lots, The Energy Gang, IEA talks, Volts podcast</div>
+      </div>
+      <div class="daily-slot">
+        <div class="slot-time">Weekly · 2 hrs</div>
+        <div class="slot-activity">Write a 300-word memo</div>
+        <div class="slot-duration">Synthesise the week in your own words. This is non-negotiable.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="timeline-all">
+
+    <div class="tl-month" style="position:relative">
+      <div class="tl-month-dot" style="background:var(--m1)"></div>
+      <div class="tl-month-head" style="color:var(--m1)">MONTH 1 · FOUNDATIONS — How Energy Actually Works</div>
+      <div class="tl-weeks">
+        <div class="tl-week"><div class="tl-week-num">Week 1</div><div class="tl-week-title">The Global Energy System — Big Picture</div></div>
+        <div class="tl-week"><div class="tl-week-num">Week 2</div><div class="tl-week-title">Fossil Fuels: Coal, Oil & Gas in Depth</div></div>
+        <div class="tl-week"><div class="tl-week-num">Week 3</div><div class="tl-week-title">Nuclear Energy & How Reactors Work</div></div>
+        <div class="tl-week"><div class="tl-week-num">Week 4</div><div class="tl-week-title">Renewables: Solar, Wind, Hydro & the Grid</div></div>
+      </div>
+    </div>
+
+    <div class="tl-month" style="position:relative">
+      <div class="tl-month-dot" style="background:var(--m2)"></div>
+      <div class="tl-month-head" style="color:var(--m2)">MONTH 2 · MARKETS — Prices, Finance & Trade</div>
+      <div class="tl-weeks">
+        <div class="tl-week"><div class="tl-week-num">Week 5</div><div class="tl-week-title">Oil Markets: Pricing, OPEC & Benchmarks</div></div>
+        <div class="tl-week"><div class="tl-week-num">Week 6</div><div class="tl-week-title">Natural Gas Markets & LNG Trade</div></div>
+        <div class="tl-week"><div class="tl-week-num">Week 7</div><div class="tl-week-title">Electricity Markets & Power Economics</div></div>
+        <div class="tl-week"><div class="tl-week-num">Week 8</div><div class="tl-week-title">Energy Finance, Investment & Carbon Markets</div></div>
+      </div>
+    </div>
+
+    <div class="tl-month" style="position:relative">
+      <div class="tl-month-dot" style="background:var(--m3)"></div>
+      <div class="tl-month-head" style="color:var(--m3)">MONTH 3 · GEOPOLITICS — Power, Wars & Strategy</div>
+      <div class="tl-weeks">
+        <div class="tl-week"><div class="tl-week-num">Week 9</div><div class="tl-week-title">Middle East: OPEC, Saudi Arabia & the Gulf</div></div>
+        <div class="tl-week"><div class="tl-week-num">Week 10</div><div class="tl-week-title">Russia, Europe & the Gas War</div></div>
+        <div class="tl-week"><div class="tl-week-num">Week 11</div><div class="tl-week-title">China, Asia & the New Energy Order</div></div>
+        <div class="tl-week"><div class="tl-week-num">Week 12</div><div class="tl-week-title">US Shale, Americas & Energy Independence</div></div>
+      </div>
+    </div>
+
+    <div class="tl-month" style="position:relative">
+      <div class="tl-month-dot" style="background:var(--m4)"></div>
+      <div class="tl-month-head" style="color:var(--m4)">MONTH 4 · MASTERY — Transition, Future & Expert Thinking</div>
+      <div class="tl-weeks">
+        <div class="tl-week"><div class="tl-week-num">Week 13</div><div class="tl-week-title">The Energy Transition: What It Really Requires</div></div>
+        <div class="tl-week"><div class="tl-week-num">Week 14</div><div class="tl-week-title">Africa, Emerging Markets & Energy Access</div></div>
+        <div class="tl-week"><div class="tl-week-num">Week 15</div><div class="tl-week-title">Future Technologies: Hydrogen, SMRs, Batteries</div></div>
+        <div class="tl-week"><div class="tl-week-num">Week 16</div><div class="tl-week-title">Synthesis: Build Your Own Energy World View</div></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- BOOKS -->
+  <div class="books-section">
+    <div class="books-title">Essential Reading — 16 Books for 4 Months</div>
+    <div class="books-grid">
+      <div class="book-card">
+        <div class="book-phase" style="color:var(--m1)">Month 1 · Foundations</div>
+        <div class="book-title">The Prize</div>
+        <div class="book-author">Daniel Yergin</div>
+        <div class="book-why">The definitive history of oil — essential foundation. Long but gripping.</div>
+      </div>
+      <div class="book-card">
+        <div class="book-phase" style="color:var(--m1)">Month 1 · Foundations</div>
+        <div class="book-title">Energy: A Human History</div>
+        <div class="book-author">Richard Rhodes</div>
+        <div class="book-why">How each energy source was discovered and changed civilisation.</div>
+      </div>
+      <div class="book-card">
+        <div class="book-phase" style="color:var(--m1)">Month 1 · Foundations</div>
+        <div class="book-title">How to Avoid a Climate Disaster</div>
+        <div class="book-author">Bill Gates</div>
+        <div class="book-why">Accessible, structured intro to the decarbonisation challenge.</div>
+      </div>
+      <div class="book-card">
+        <div class="book-phase" style="color:var(--m1)">Month 1 · Foundations</div>
+        <div class="book-title">Sustainable Energy — Without the Hot Air</div>
+        <div class="book-author">David MacKay</div>
+        <div class="book-why">Quantitative, brilliant. Free online. Kills energy myths with math.</div>
+      </div>
+      <div class="book-card">
+        <div class="book-phase" style="color:var(--m2)">Month 2 · Markets</div>
+        <div class="book-title">The New Map</div>
+        <div class="book-author">Daniel Yergin</div>
+        <div class="book-why">Geopolitics of energy today — shale revolution, China, Middle East.</div>
+      </div>
+      <div class="book-card">
+        <div class="book-phase" style="color:var(--m2)">Month 2 · Markets</div>
+        <div class="book-title">The Frackers</div>
+        <div class="book-author">Gregory Zuckerman</div>
+        <div class="book-why">The shale revolution that made America the world's biggest oil producer.</div>
+      </div>
+      <div class="book-card">
+        <div class="book-phase" style="color:var(--m2)">Month 2 · Markets</div>
+        <div class="book-title">The Oil Curse</div>
+        <div class="book-author">Michael L. Ross</div>
+        <div class="book-why">Why oil wealth often leads to authoritarianism and underdevelopment.</div>
+      </div>
+      <div class="book-card">
+        <div class="book-phase" style="color:var(--m2)">Month 2 · Markets</div>
+        <div class="book-title">The LNG Revolution</div>
+        <div class="book-author">Oystein Noreng</div>
+        <div class="book-why">How liquefied natural gas transformed global energy trade.</div>
+      </div>
+      <div class="book-card">
+        <div class="book-phase" style="color:var(--m3)">Month 3 · Geopolitics</div>
+        <div class="book-title">Resource Wars</div>
+        <div class="book-author">Michael Klare</div>
+        <div class="book-why">How competition for energy drives modern conflict worldwide.</div>
+      </div>
+      <div class="book-card">
+        <div class="book-phase" style="color:var(--m3)">Month 3 · Geopolitics</div>
+        <div class="book-title">Windfall</div>
+        <div class="book-author">Meghan O'Sullivan</div>
+        <div class="book-why">How the shale revolution reshuffled the geopolitical order.</div>
+      </div>
+      <div class="book-card">
+        <div class="book-phase" style="color:var(--m3)">Month 3 · Geopolitics</div>
+        <div class="book-title">The World for Sale</div>
+        <div class="book-author">Blas & Farchy</div>
+        <div class="book-why">How commodity traders like Vitol, Glencore & Trafigura run the world.</div>
+      </div>
+      <div class="book-card">
+        <div class="book-phase" style="color:var(--m3)">Month 3 · Geopolitics</div>
+        <div class="book-title">Saudi Arabia: The Inside Story</div>
+        <div class="book-author">Robert Lacey</div>
+        <div class="book-why">Understand the kingdom that controls the global oil price floor.</div>
+      </div>
+      <div class="book-card">
+        <div class="book-phase" style="color:var(--m4)">Month 4 · Mastery</div>
+        <div class="book-title">The Switch</div>
+        <div class="book-author">Chris Goodall</div>
+        <div class="book-why">The clean energy revolution: solar economics, batteries, hydrogen.</div>
+      </div>
+      <div class="book-card">
+        <div class="book-phase" style="color:var(--m4)">Month 4 · Mastery</div>
+        <div class="book-title">Electrify</div>
+        <div class="book-author">Saul Griffith</div>
+        <div class="book-why">Practical blueprint for electrifying everything. Very specific.</div>
+      </div>
+      <div class="book-card">
+        <div class="book-phase" style="color:var(--m4)">Month 4 · Mastery</div>
+        <div class="book-title">The Mineral Curse</div>
+        <div class="book-author">Thane Gustafson</div>
+        <div class="book-why">Russia's energy economy and the limits of petrostate power.</div>
+      </div>
+      <div class="book-card">
+        <div class="book-phase" style="color:var(--m4)">Month 4 · Mastery</div>
+        <div class="book-title">Ending Fossil Fuels</div>
+        <div class="book-author">Holly Jean Buck</div>
+        <div class="book-why">Radical honesty about what a real phase-out requires politically.</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- MONTH 1 -->
+<div class="month-section" id="section-1">
+  <div class="month-header">
+    <div class="month-num" style="color:var(--m1)">01</div>
+    <div class="month-info">
+      <span class="month-badge" style="background:rgba(232,197,71,0.12);color:var(--m1);border:1px solid rgba(232,197,71,0.2)">April – Foundations</span>
+      <div class="month-title" style="color:var(--m1)">HOW ENERGY<br>ACTUALLY WORKS</div>
+      <p class="month-desc">Build the bedrock. By end of month 1 you should be able to explain every energy source, how it's produced, what it costs, and why the world still runs on fossil fuels despite everything.</p>
+      <div class="month-outcome" style="border-color:var(--m1)">🎯 Goal: You can explain the global energy system to someone at a dinner party with confidence.</div>
+    </div>
+  </div>
+
+  <div class="weeks-grid">
+
+    <div class="week-card" id="wk1">
+      <button class="done-check" onclick="toggleWeek('wk1')" title="Mark week complete">✓</button>
+      <div class="week-label">Week 1 · April</div>
+      <div class="week-title">The Global Energy System — The Big Picture</div>
+      <div class="week-topics">
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>Primary vs. final energy — what the difference means</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>The global energy mix: oil 34%, coal 27%, gas 25%, rest ~14%</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>Why 86% of energy is still fossil fuel despite all the headlines</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>Energy units: kWh, MWh, GJ, EJ, MMBtu, barrels — learn to convert</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>Energy intensity: why rich nations use more, how efficiency works</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>The IEA, OPEC, IRENA — what each institution does</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>Read: IEA World Energy Outlook executive summary (free online)</span></div>
+      </div>
+      <div class="week-resources">
+        <div class="resources-label">Resources</div>
+        <div class="resource-item">IEA World Energy Outlook 2024 — Executive Summary (free)</div>
+        <div class="resource-item">Energy Institute Statistical Review 2025 (download free)</div>
+        <div class="resource-item">Our World in Data — Energy section (free, all charts)</div>
+        <div class="resource-item">MacKay: "Sustainable Energy Without the Hot Air" — Chapters 1–5</div>
+      </div>
+      <div class="week-goal">📝 Write a 300-word memo: "Why do we still depend on fossil fuels in 2025?"</div>
+    </div>
+
+    <div class="week-card" id="wk2">
+      <button class="done-check" onclick="toggleWeek('wk2')" title="Mark week complete">✓</button>
+      <div class="week-label">Week 2 · April</div>
+      <div class="week-title">Fossil Fuels in Depth — Coal, Oil & Gas</div>
+      <div class="week-topics">
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>Coal: types (lignite → anthracite), how it's burned, who uses it</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>Oil: exploration → drilling → refining → products (petrol, jet fuel, plastics)</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>Unconventional oil: deep sea, oil sands, shale/tight oil (fracking)</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>Natural gas: pipelines vs LNG — how it's liquefied, shipped, regasified</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>The concept of "reserve life" — how many years of supply exist</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>Carbon intensity: CO₂ per kWh for each fuel type</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>Why natural gas is called the "bridge fuel" — and why critics disagree</span></div>
+      </div>
+      <div class="week-resources">
+        <div class="resources-label">Resources</div>
+        <div class="resource-item">Yergin, "The Prize" — Part 1 (origins of oil)</div>
+        <div class="resource-item">EIA: How oil and gas is formed (free explainers)</div>
+        <div class="resource-item">YouTube: "How does an LNG tanker work?" (multiple good videos)</div>
+        <div class="resource-item">Bloomberg Quicktake: The shale revolution explained</div>
+      </div>
+      <div class="week-goal">📝 Memo: "Explain the oil refining chain from crude to consumer in your own words."</div>
+    </div>
+
+    <div class="week-card" id="wk3">
+      <button class="done-check" onclick="toggleWeek('wk3')" title="Mark week complete">✓</button>
+      <div class="week-label">Week 3 · April</div>
+      <div class="week-title">Nuclear Energy — Everything About the Atom</div>
+      <div class="week-topics">
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>Fission vs fusion — why fusion is still 20 years away (but less so now)</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>PWR, BWR, CANDU — different reactor designs explained</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>The nuclear fuel cycle: uranium mining → enrichment → pellets → spent fuel</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>Three Mile Island, Chernobyl, Fukushima — what went wrong and why</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>Small Modular Reactors (SMRs) — the nuclear renaissance thesis</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>Nuclear vs public perception — why safety statistics are often misread</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>France's nuclear model vs Germany's Energiewende — compare both cases</span></div>
+      </div>
+      <div class="week-resources">
+        <div class="resources-label">Resources</div>
+        <div class="resource-item">World Nuclear Association — free explainers on all reactor types</div>
+        <div class="resource-item">Gates, "How to Avoid a Climate Disaster" — nuclear chapter</div>
+        <div class="resource-item">Podcast: "Decouple" — pro-nuclear perspectives</div>
+        <div class="resource-item">NuScale, TerraPower websites — read their SMR specs</div>
+      </div>
+      <div class="week-goal">📝 Memo: "Make the case for and against nuclear as Europe's future baseload."</div>
+    </div>
+
+    <div class="week-card" id="wk4">
+      <button class="done-check" onclick="toggleWeek('wk4')" title="Mark week complete">✓</button>
+      <div class="week-label">Week 4 · April</div>
+      <div class="week-title">Renewables & the Grid — The Modern Energy System</div>
+      <div class="week-topics">
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>Solar PV: how it works, efficiency limits, the 90% cost drop since 2010</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>Wind: onshore vs offshore, capacity factors, why Germany chose wind</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>Hydropower: dam mechanics, pumped storage, why Brazil is 65% hydro</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>The intermittency problem — why you can't just "build more solar"</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>The electricity grid: frequency, balancing, merit order pricing</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>Negative electricity prices — when and why they happen</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>LCOE (Levelized Cost of Energy) — how to read and use this metric</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>Batteries and storage: where we are and what 4-hour vs 12-hour means</span></div>
+      </div>
+      <div class="week-resources">
+        <div class="resources-label">Resources</div>
+        <div class="resource-item">Lazard LCOE+ 2025 report (free download)</div>
+        <div class="resource-item">Ember Energy: European Electricity Review 2025 (free)</div>
+        <div class="resource-item">MacKay: Chapters 10–18 (wind, solar, the maths)</div>
+        <div class="resource-item">Podcast: "Volts" by David Roberts — grid episodes</div>
+      </div>
+      <div class="week-goal">📝 Memo: "Why is Germany's electricity more expensive than France's, despite both being energy transition leaders?"</div>
+    </div>
+  </div>
+</div>
+
+<!-- MONTH 2 -->
+<div class="month-section" id="section-2">
+  <div class="month-header">
+    <div class="month-num" style="color:var(--m2)">02</div>
+    <div class="month-info">
+      <span class="month-badge" style="background:rgba(232,125,71,0.12);color:var(--m2);border:1px solid rgba(232,125,71,0.2)">May – Markets</span>
+      <div class="month-title" style="color:var(--m2)">MONEY, MARKETS<br>& TRADE</div>
+      <p class="month-desc">Learn how energy is priced, traded, and financed. This is where energy meets economics and finance — your home turf from your management degree.</p>
+      <div class="month-outcome" style="border-color:var(--m2)">🎯 Goal: Read an energy market report and understand every data point. Know what moves prices.</div>
+    </div>
+  </div>
+  <div class="weeks-grid">
+    <div class="week-card" id="wk5">
+      <button class="done-check" onclick="toggleWeek('wk5')" title="Mark week complete">✓</button>
+      <div class="week-label">Week 5 · May</div>
+      <div class="week-title">Oil Markets — Pricing, Benchmarks & OPEC</div>
+      <div class="week-topics">
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>Brent vs WTI vs Dubai — why three benchmarks exist and their differences</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>How oil futures work: spot, forward curves, contango vs backwardation</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>OPEC+: who is in it, how decisions are made, Saudi Arabia's role</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>Fiscal breakeven prices: Saudi ~$70, Russia ~$65, US shale ~$45</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>The petrodollar system — why oil must be bought in USD and what that means</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>Big oil company structure: IOCs vs NOCs (Aramco, BP, Shell, ExxonMobil)</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>Oil tanker shipping: Very Large Crude Carriers, Strait of Hormuz chokepoint</span></div>
+      </div>
+      <div class="week-resources">
+        <div class="resources-label">Resources</div>
+        <div class="resource-item">Yergin, "The New Map" — oil market chapters</div>
+        <div class="resource-item">EIA Short-Term Energy Outlook (free monthly report)</div>
+        <div class="resource-item">S&P Global Platts — oil price explainers (website)</div>
+        <div class="resource-item">Podcast: "The Energy Gang" — oil market episodes</div>
+      </div>
+      <div class="week-goal">📝 Memo: "What would cause oil to hit $120/barrel again? List 5 scenarios."</div>
+    </div>
+    <div class="week-card" id="wk6">
+      <button class="done-check" onclick="toggleWeek('wk6')" title="Mark week complete">✓</button>
+      <div class="week-label">Week 6 · May</div>
+      <div class="week-title">Natural Gas Markets & the LNG Revolution</div>
+      <div class="week-topics">
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>Why gas has 3 separate markets (US/Henry Hub, Europe/TTF, Asia/JKM)</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>LNG economics: liquefaction plants, tankers, regasification terminals</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>Pipeline politics: Nord Stream, TurkStream, Yamal — how infrastructure = power</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>How the 2022 European gas crisis unfolded — week by week logic</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>How the EU replaced Russian gas: diversification strategy</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>US LNG exports: why it matters for Europe and global price convergence</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>Gas storage: seasonal dynamics, "filling" for winter, the EU storage rules</span></div>
+      </div>
+      <div class="week-resources">
+        <div class="resources-label">Resources</div>
+        <div class="resource-item">Zuckerman, "The Frackers" — shale gas chapters</div>
+        <div class="resource-item">Gas Infrastructure Europe (GIE) — live EU storage tracker</div>
+        <div class="resource-item">Reuters: "How Europe replaced Russian gas" (series)</div>
+        <div class="resource-item">IEA: Gas Market Report Q1 2025 (free)</div>
+      </div>
+      <div class="week-goal">📝 Memo: "Why does European gas cost 3x more than US gas, and can this gap ever close?"</div>
+    </div>
+    <div class="week-card" id="wk7">
+      <button class="done-check" onclick="toggleWeek('wk7')" title="Mark week complete">✓</button>
+      <div class="week-label">Week 7 · May</div>
+      <div class="week-title">Electricity Markets — Power Economics</div>
+      <div class="week-topics">
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>Wholesale vs retail electricity — how prices work at each stage</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>The merit order: cheapest generation first, last plant sets the price</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>Day-ahead vs intraday vs balancing markets</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>Power Purchase Agreements (PPAs) — the tool for financing renewables</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>Capacity markets: why you need to pay for power plants that rarely run</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>Contracts for Difference (CfDs): how governments guarantee renewable prices</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>Why the EU reformed its electricity market design in 2024</span></div>
+      </div>
+      <div class="week-resources">
+        <div class="resources-label">Resources</div>
+        <div class="resource-item">Ember Energy: EU Electricity Review (free, detailed)</div>
+        <div class="resource-item">EU Council: "How EU electricity is produced and sold" explainer</div>
+        <div class="resource-item">Aurora Energy Research blog posts (some free)</div>
+        <div class="resource-item">YouTube: "How electricity markets work" — Euan Mearns channel</div>
+      </div>
+      <div class="week-goal">📝 Memo: "Explain why building more solar can actually raise average electricity prices in the short term."</div>
+    </div>
+    <div class="week-card" id="wk8">
+      <button class="done-check" onclick="toggleWeek('wk8')" title="Mark week complete">✓</button>
+      <div class="week-label">Week 8 · May</div>
+      <div class="week-title">Energy Finance, Investment & Carbon Markets</div>
+      <div class="week-topics">
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>How energy projects are financed: project finance, equity, bonds</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>The EU Emissions Trading System (ETS) — how carbon pricing works</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>The IRA (Inflation Reduction Act): $370bn in clean energy incentives</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>ESG investing and energy — how institutional capital is shifting</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>The commodity trading world: Vitol, Trafigura, Glencore, Gunvor</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>Stranded asset risk: why fossil fuel valuations are contested</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>Bloomberg NEF and Wood Mackenzie: understand what these firms do</span></div>
+      </div>
+      <div class="week-resources">
+        <div class="resources-label">Resources</div>
+        <div class="resource-item">Blas & Farchy, "The World for Sale" — commodity trading (read this month)</div>
+        <div class="resource-item">EU ETS explainer on European Commission website (free)</div>
+        <div class="resource-item">IEA: World Energy Investment 2024 (free)</div>
+        <div class="resource-item">Podcast: "Odd Lots" (Bloomberg) — energy market episodes</div>
+      </div>
+      <div class="week-goal">📝 Memo: "How does the EU ETS work and why did the carbon price collapse in 2023?"</div>
+    </div>
+  </div>
+</div>
+
+<!-- MONTH 3 -->
+<div class="month-section" id="section-3">
+  <div class="month-header">
+    <div class="month-num" style="color:var(--m3)">03</div>
+    <div class="month-info">
+      <span class="month-badge" style="background:rgba(71,184,232,0.12);color:var(--m3);border:1px solid rgba(71,184,232,0.2)">June – Geopolitics</span>
+      <div class="month-title" style="color:var(--m3)">POWER, WARS<br>& STRATEGY</div>
+      <p class="month-desc">Energy is geopolitics. Learn why wars are fought, alliances formed, and regimes survive or fall based on oil and gas. This is the most exciting month.</p>
+      <div class="month-outcome" style="border-color:var(--m3)">🎯 Goal: Given any energy news event, immediately analyse the geopolitical implications.</div>
+    </div>
+  </div>
+  <div class="weeks-grid">
+    <div class="week-card" id="wk9">
+      <button class="done-check" onclick="toggleWeek('wk9')" title="Mark week complete">✓</button>
+      <div class="week-label">Week 9 · June</div>
+      <div class="week-title">Middle East — OPEC, Saudi Arabia & the Gulf</div>
+      <div class="week-topics">
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>Saudi Aramco: history, IPO, role in global price setting</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>Vision 2030: MBS's attempt to diversify beyond oil</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>The 1973 Arab Oil Embargo: cause, mechanism, and lasting consequences</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>Strait of Hormuz: 20% of global oil passes through it — why this matters</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>UAE, Qatar, Kuwait — different petrostate models</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>US-Saudi relationship: from FDR handshake to Biden fist bump to today</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>Iran sanctions: how they work, their limits, oil smuggling networks</span></div>
+      </div>
+      <div class="week-resources">
+        <div class="resources-label">Resources</div>
+        <div class="resource-item">Yergin, "The New Map" — Middle East chapters</div>
+        <div class="resource-item">Lacey, "Saudi Arabia: The Inside Story"</div>
+        <div class="resource-item">The Economist: Saudi Arabia special reports (free archive)</div>
+        <div class="resource-item">Podcast: "The Middle East Eye" — energy geopolitics episodes</div>
+      </div>
+      <div class="week-goal">📝 Memo: "Why does Saudi Arabia sometimes cut production even when it hurts its own revenue?"</div>
+    </div>
+    <div class="week-card" id="wk10">
+      <button class="done-check" onclick="toggleWeek('wk10')" title="Mark week complete">✓</button>
+      <div class="week-label">Week 10 · June</div>
+      <div class="week-title">Russia, Europe & the Gas War</div>
+      <div class="week-topics">
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>How Russia built its gas empire: Gazprom, pipelines, leverage</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>The Ukraine transit gas crisis of 2006 and 2009 — early warning signs</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>Nord Stream 1 and 2: why Germany kept deepening the dependency</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>February 2022: the invasion and the energy shock — week by week</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>REPowerEU: how Europe weaned off Russian gas in 18 months</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>The Nord Stream sabotage — what we know and its strategic significance</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>Russia selling oil to China and India: the "shadow fleet"</span></div>
+      </div>
+      <div class="week-resources">
+        <div class="resources-label">Resources</div>
+        <div class="resource-item">O'Sullivan, "Windfall" — Russian energy chapters</div>
+        <div class="resource-item">Gustafson, "The Mineral Curse" (start in month 3)</div>
+        <div class="resource-item">FT: "How Europe replaced Russian gas" longread</div>
+        <div class="resource-item">Bruegel think tank: EU energy crisis reports (all free)</div>
+      </div>
+      <div class="week-goal">📝 Memo: "Did Europe's energy dependence on Russia cause the war, or did the war reveal the dependence?"</div>
+    </div>
+    <div class="week-card" id="wk11">
+      <button class="done-check" onclick="toggleWeek('wk11')" title="Mark week complete">✓</button>
+      <div class="week-label">Week 11 · June</div>
+      <div class="week-title">China, Asia & the New Energy Order</div>
+      <div class="week-topics">
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>China's energy paradox: world's biggest coal user AND renewable installer</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>Belt and Road Initiative: how China exports energy infrastructure globally</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>China's supply chain dominance: solar (85%), batteries (75%), rare earths</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>India's energy dilemma: development rights vs climate commitments</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>Japan's post-Fukushima energy trap: LNG dependence and costs</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>South Korea's nuclear success and energy diplomacy</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>Southeast Asia: coal-heavy growth, ASEAN's energy targets</span></div>
+      </div>
+      <div class="week-resources">
+        <div class="resources-label">Resources</div>
+        <div class="resource-item">Yergin, "The New Map" — China chapters</div>
+        <div class="resource-item">IEA: China Energy Review 2024 (free)</div>
+        <div class="resource-item">Carbon Brief: China country profile (free, very detailed)</div>
+        <div class="resource-item">Podcast: "China Neican" — energy and policy episodes</div>
+      </div>
+      <div class="week-goal">📝 Memo: "Is China a climate leader, a climate villain, or both? Build your argument."</div>
+    </div>
+    <div class="week-card" id="wk12">
+      <button class="done-check" onclick="toggleWeek('wk12')" title="Mark week complete">✓</button>
+      <div class="week-label">Week 12 · June</div>
+      <div class="week-title">The Americas — US Shale, Canada & Latin America</div>
+      <div class="week-topics">
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>The shale revolution: how fracking made America #1 in oil AND gas</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>The Inflation Reduction Act: what $370bn in clean energy subsidies does</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>Canada's oil sands: economic value vs environmental cost</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>Brazil's Petrobras, pre-salt oil, and the ethanol programme</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>Venezuela's collapse: from OPEC giant to oil ghost state</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>Argentina's Vaca Muerta: the shale play that could change South America</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>Chile and the lithium triangle: critical minerals for the energy transition</span></div>
+      </div>
+      <div class="week-resources">
+        <div class="resources-label">Resources</div>
+        <div class="resource-item">Zuckerman, "The Frackers" (finish this month)</div>
+        <div class="resource-item">EIA: US energy independence explained (free)</div>
+        <div class="resource-item">Americas Quarterly: Latin America energy coverage</div>
+        <div class="resource-item">Klare, "Resource Wars" — Americas chapters</div>
+      </div>
+      <div class="week-goal">📝 Memo: "How did the shale revolution change the geopolitical balance of power?"</div>
+    </div>
+  </div>
+</div>
+
+<!-- MONTH 4 -->
+<div class="month-section" id="section-4">
+  <div class="month-header">
+    <div class="month-num" style="color:var(--m4)">04</div>
+    <div class="month-info">
+      <span class="month-badge" style="background:rgba(123,232,112,0.12);color:var(--m4);border:1px solid rgba(123,232,112,0.2)">July – Mastery</span>
+      <div class="month-title" style="color:var(--m4)">SYNTHESIS<br>& MASTERY</div>
+      <p class="month-desc">Connect everything. By the end of month 4, you should be able to write or speak about any energy topic with genuine depth — ready for ESCP, interviews, or a career in the sector.</p>
+      <div class="month-outcome" style="border-color:var(--m4)">🎯 Goal: Write a 2,000-word original analysis of any current energy topic from scratch.</div>
+    </div>
+  </div>
+  <div class="weeks-grid">
+    <div class="week-card" id="wk13">
+      <button class="done-check" onclick="toggleWeek('wk13')" title="Mark week complete">✓</button>
+      <div class="week-label">Week 13 · July</div>
+      <div class="week-title">The Energy Transition — What It Really Requires</div>
+      <div class="week-topics">
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>The energy trilemma: security vs sustainability vs affordability</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>What "net zero by 2050" physically requires (grid, storage, materials)</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>Critical minerals bottleneck: lithium, cobalt, copper, rare earths</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>Why the 1.5°C target is now considered unachievable</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>The IEA net zero pathway vs real-world divergence</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>Electrification of transport, heating, and industry</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>Hard-to-abate sectors: steel, cement, aviation, shipping</span></div>
+      </div>
+      <div class="week-resources">
+        <div class="resources-label">Resources</div>
+        <div class="resource-item">IEA: Net Zero by 2050 Roadmap (free)</div>
+        <div class="resource-item">Goodall, "The Switch" — clean energy economics</div>
+        <div class="resource-item">RFF Global Energy Outlook 2026 (free, just published)</div>
+        <div class="resource-item">Carbon Brief: 1.5°C explainer series</div>
+      </div>
+      <div class="week-goal">📝 Memo: "What are the three biggest obstacles to the energy transition, and who benefits from each?"</div>
+    </div>
+    <div class="week-card" id="wk14">
+      <button class="done-check" onclick="toggleWeek('wk14')" title="Mark week complete">✓</button>
+      <div class="week-label">Week 14 · July</div>
+      <div class="week-title">Africa, Emerging Markets & Energy Access</div>
+      <div class="week-topics">
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>600 million Africans without electricity — the numbers and why</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>South Africa's Eskom crisis: load-shedding and the anatomy of failure</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>Nigeria's oil paradox: Africa's biggest producer with near-zero electricity</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>Distributed solar: leapfrogging the grid in rural Africa</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>China's energy infrastructure investments in Africa</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>Just Transition: why asking developing nations to skip fossil fuels is contested</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>The JETP (Just Energy Transition Partnerships): what they are and if they work</span></div>
+      </div>
+      <div class="week-resources">
+        <div class="resources-label">Resources</div>
+        <div class="resource-item">IEA: Africa Energy Outlook 2024 (free)</div>
+        <div class="resource-item">Economist: South Africa energy crisis coverage</div>
+        <div class="resource-item">Buck, "Ending Fossil Fuels" — justice chapters</div>
+        <div class="resource-item">The Africa Report: energy section (free)</div>
+      </div>
+      <div class="week-goal">📝 Memo: "Should Africa be allowed to build coal plants? Argue both sides."</div>
+    </div>
+    <div class="week-card" id="wk15">
+      <button class="done-check" onclick="toggleWeek('wk15')" title="Mark week complete">✓</button>
+      <div class="week-label">Week 15 · July</div>
+      <div class="week-title">Future Technologies — Hydrogen, SMRs, AI & Batteries</div>
+      <div class="week-topics">
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>Green hydrogen: the full chain (electrolysis → storage → transport → use)</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>Why hydrogen is an energy carrier, not a source — and why that matters</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>SMRs: which companies, which countries, realistic timelines</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>Nuclear fusion: NIF's 2022 ignition, commercial timeline, who's investing</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>AI and data centers: why energy demand is surging again after years of falling</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>Long-duration energy storage: iron-air batteries, pumped thermal, gravity</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>Carbon capture (CCS): does it work, who's building it, what it costs</span></div>
+      </div>
+      <div class="week-resources">
+        <div class="resources-label">Resources</div>
+        <div class="resource-item">BloombergNEF Hydrogen Economy Outlook (free summary)</div>
+        <div class="resource-item">IAEA: SMRs — advanced technologies explainer</div>
+        <div class="resource-item">IEA: The Role of CCUS in Net Zero (free)</div>
+        <div class="resource-item">Podcast: "My Climate Journey" — future tech episodes</div>
+      </div>
+      <div class="week-goal">📝 Memo: "Green hydrogen: genuine breakthrough or expensive distraction? Make your call."</div>
+    </div>
+    <div class="week-card" id="wk16">
+      <button class="done-check" onclick="toggleWeek('wk16')" title="Mark week complete">✓</button>
+      <div class="week-label">Week 16 · July</div>
+      <div class="week-title">Synthesis — Build Your Own Energy World View</div>
+      <div class="week-topics">
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>Review all 16 weekly memos — find the threads connecting them</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>Write your "Energy Thesis": what do you believe is the single most underrated risk?</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>Map the energy sector for career/business opportunities at ESCP</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>Build a reading list for months 5–12 (you're not done)</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>Identify 3 podcasts, 3 newsletters, 3 data sources to follow weekly</span></div>
+        <div class="topic-item" onclick="toggleTopic(this)"><div class="topic-check"></div><span>Final challenge: give a 10-minute verbal briefing on global energy to someone who knows nothing</span></div>
+      </div>
+      <div class="week-resources">
+        <div class="resources-label">Ongoing Resources (post-programme)</div>
+        <div class="resource-item">Newsletters: Carbon Brief, BNEF daily, Energy Monitor, Heatmap News</div>
+        <div class="resource-item">Podcasts: Catalyst (Shayle Kann), Volts, The Energy Gang, Odd Lots</div>
+        <div class="resource-item">Data: Our World in Data, IEA Data Explorer, Ember Charts</div>
+        <div class="resource-item">Reports: IEA WEO annually, IRENA Outlook, Energy Institute Stat Review</div>
+      </div>
+      <div class="week-goal">🏆 Final: Write a 2,000-word original analysis of any energy topic of your choice. This is your proof of mastery.</div>
+    </div>
+  </div>
+</div>
+
+</div><!-- end .content -->
+
+<script>
+function showSection(id) {
+  document.querySelectorAll('.month-section, .all-view').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.month-tab').forEach(b => b.classList.remove('active'));
+
+  if (id === 'all') {
+    document.getElementById('section-all').classList.add('active');
+  } else {
+    document.getElementById('section-' + id).classList.add('active');
+  }
+
+  document.querySelectorAll('.month-tab').forEach(b => {
+    if (b.dataset.m == id) b.classList.add('active');
+  });
+}
+
+function toggleTopic(el) {
+  el.classList.toggle('checked');
+  if (el.classList.contains('checked')) {
+    el.querySelector('.topic-check').textContent = '✓';
+  } else {
+    el.querySelector('.topic-check').textContent = '';
+  }
+  updateProgress();
+}
+
+function toggleWeek(id) {
+  const card = document.getElementById(id);
+  const btn = card.querySelector('.done-check');
+  card.classList.toggle('done');
+  btn.classList.toggle('done');
+}
+
+function updateProgress() {
+  const months = [
+    { ids: ['wk1','wk2','wk3','wk4'], bar: 'p1', pct: 'pp1' },
+    { ids: ['wk5','wk6','wk7','wk8'], bar: 'p2', pct: 'pp2' },
+    { ids: ['wk9','wk10','wk11','wk12'], bar: 'p3', pct: 'pp3' },
+    { ids: ['wk13','wk14','wk15','wk16'], bar: 'p4', pct: 'pp4' },
+  ];
+  months.forEach(m => {
+    let total = 0, done = 0;
+    m.ids.forEach(id => {
+      const card = document.getElementById(id);
+      if (!card) return;
+      const items = card.querySelectorAll('.topic-item');
+      total += items.length;
+      done += card.querySelectorAll('.topic-item.checked').length;
+    });
+    const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+    document.getElementById(m.bar).style.width = pct + '%';
+    document.getElementById(m.pct).textContent = pct + '%';
+  });
+}
+</script>
+</body>
+</html>

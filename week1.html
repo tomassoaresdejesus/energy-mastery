@@ -1,0 +1,1241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Week 1 — The Global Energy System</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a0a;
+  --surface: #111111;
+  --surface2: #1a1a1a;
+  --border: #252525;
+  --text: #f0ece4;
+  --text2: #7a7570;
+  --text3: #4a4540;
+  --accent: #e8c547;
+  --orange: #e87d47;
+  --blue: #47b8e8;
+  --green: #7be870;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 300;
+  line-height: 1.7;
+  min-height: 100vh;
+}
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 999;
+  opacity: 0.4;
+}
+
+/* NAV */
+.top-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(10,10,10,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 40px;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  height: 52px;
+}
+.nav-back {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--text2);
+  text-decoration: none;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: color 0.2s;
+}
+.nav-back:hover { color: var(--accent); }
+.nav-divider { width: 1px; height: 20px; background: var(--border); }
+.nav-title {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.68rem;
+  color: var(--text3);
+  letter-spacing: 0.08em;
+}
+.nav-toc {
+  margin-left: auto;
+  display: flex;
+  gap: 24px;
+}
+.nav-toc a {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.62rem;
+  color: var(--text3);
+  text-decoration: none;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: color 0.2s;
+}
+.nav-toc a:hover { color: var(--accent); }
+
+/* HERO */
+.hero {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 80px 40px 60px;
+  border-bottom: 1px solid var(--border);
+}
+.hero-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  color: var(--accent);
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.hero-eyebrow::before {
+  content: '';
+  display: block;
+  width: 32px;
+  height: 1px;
+  background: var(--accent);
+}
+.hero h1 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3.5rem, 8vw, 7rem);
+  line-height: 0.92;
+  letter-spacing: 0.03em;
+  margin-bottom: 24px;
+}
+.hero h1 span { color: var(--accent); }
+.hero-sub {
+  font-size: 1.05rem;
+  color: var(--text2);
+  max-width: 640px;
+  font-weight: 300;
+}
+.hero-meta {
+  display: flex;
+  gap: 32px;
+  margin-top: 36px;
+  flex-wrap: wrap;
+}
+.hero-meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.meta-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  color: var(--text3);
+  text-transform: uppercase;
+}
+.meta-value {
+  font-size: 0.9rem;
+  color: var(--text);
+}
+
+/* CONTENT LAYOUT */
+.page-body {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 40px 100px;
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: 60px;
+  align-items: start;
+}
+.main-content { min-width: 0; }
+.sidebar { position: sticky; top: 72px; }
+
+/* TOPIC SECTIONS */
+.topic-section {
+  padding: 60px 0;
+  border-bottom: 1px solid var(--border);
+}
+.topic-section:last-child { border-bottom: none; }
+.topic-tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  color: var(--accent);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.topic-section h2 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  letter-spacing: 0.04em;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.topic-section h2 span { color: var(--accent); }
+.topic-intro {
+  font-size: 1rem;
+  color: var(--text2);
+  margin-bottom: 40px;
+  max-width: 600px;
+  font-style: italic;
+}
+
+/* BODY TEXT */
+.body-text { margin-bottom: 20px; font-size: 0.97rem; }
+.body-text strong { color: var(--text); font-weight: 500; }
+
+h3.section-head {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 36px 0 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+h3.section-head::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* CALLOUT / HIGHLIGHT BOXES */
+.callout {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  padding: 20px 24px;
+  margin: 28px 0;
+  font-size: 0.93rem;
+}
+.callout.orange { border-left-color: var(--orange); }
+.callout.blue { border-left-color: var(--blue); }
+.callout.green { border-left-color: var(--green); }
+.callout-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text3);
+  margin-bottom: 8px;
+}
+
+/* PIPELINE VISUAL */
+.pipeline {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 32px;
+  margin: 32px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.pipeline-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+}
+.pipeline-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  flex-shrink: 0;
+  width: 48px;
+}
+.pipeline-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--accent);
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+.pipeline-dot.orange { background: var(--orange); }
+.pipeline-dot.red { background: #e85447; }
+.pipeline-line {
+  width: 1px;
+  flex: 1;
+  min-height: 32px;
+  background: var(--border);
+}
+.pipeline-content {
+  padding-bottom: 32px;
+  flex: 1;
+}
+.pipeline-step:last-child .pipeline-content { padding-bottom: 0; }
+.pipeline-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.pipeline-label.accent { color: var(--accent); }
+.pipeline-label.orange { color: var(--orange); }
+.pipeline-label.red { color: #e85447; }
+.pipeline-value {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2rem;
+  letter-spacing: 0.06em;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.pipeline-desc { font-size: 0.85rem; color: var(--text2); }
+.pipeline-loss {
+  display: inline-block;
+  background: rgba(232,84,71,0.12);
+  border: 1px solid rgba(232,84,71,0.3);
+  color: #e85447;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  padding: 3px 8px;
+  margin-top: 6px;
+}
+
+/* DATA TABLE */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 24px 0;
+  font-size: 0.88rem;
+}
+.data-table th {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text3);
+  text-align: left;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border);
+}
+.data-table td {
+  padding: 11px 12px;
+  border-bottom: 1px solid rgba(37,37,37,0.5);
+  vertical-align: top;
+}
+.data-table tr:last-child td { border-bottom: none; }
+.data-table tr:hover td { background: var(--surface); }
+.td-source {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+.td-share {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.1rem;
+  letter-spacing: 0.06em;
+}
+.td-note { color: var(--text2); font-size: 0.82rem; }
+
+/* BAR CHART */
+.bar-chart { margin: 28px 0; display: flex; flex-direction: column; gap: 10px; }
+.bar-row { display: flex; align-items: center; gap: 12px; }
+.bar-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text2);
+  width: 80px;
+  flex-shrink: 0;
+  text-align: right;
+}
+.bar-track {
+  flex: 1;
+  height: 6px;
+  background: var(--surface2);
+  position: relative;
+}
+.bar-fill {
+  height: 100%;
+  transition: width 1s ease;
+}
+.bar-pct {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--text2);
+  width: 36px;
+  flex-shrink: 0;
+}
+
+/* REGION TABLE */
+.region-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin: 28px 0;
+}
+.region-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 16px 18px;
+}
+.region-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.1rem;
+  letter-spacing: 0.06em;
+  margin-bottom: 4px;
+}
+.region-stat { font-size: 0.82rem; color: var(--text2); }
+.region-update {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  margin-top: 6px;
+  text-transform: uppercase;
+}
+
+/* LNG CHAIN */
+.lng-chain {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0;
+  margin: 32px 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+.lng-step {
+  padding: 24px 16px;
+  border-right: 1px solid var(--border);
+  position: relative;
+  text-align: center;
+}
+.lng-step:last-child { border-right: none; }
+.lng-step-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2rem;
+  color: var(--border);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.lng-step-icon { font-size: 1.5rem; margin-bottom: 8px; }
+.lng-step-title {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 6px;
+}
+.lng-step-desc { font-size: 0.78rem; color: var(--text2); line-height: 1.4; }
+.lng-arrow {
+  position: absolute;
+  right: -8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 14px;
+  height: 14px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-left: none;
+  border-bottom: none;
+  transform: translateY(-50%) rotate(45deg);
+  z-index: 2;
+}
+
+/* RENEWABLES GRID */
+.renewables-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin: 28px 0;
+}
+.renew-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 22px;
+}
+.renew-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 14px;
+}
+.renew-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.3rem;
+  letter-spacing: 0.05em;
+  line-height: 1;
+}
+.renew-share {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--accent);
+  background: rgba(232,197,71,0.08);
+  border: 1px solid rgba(232,197,71,0.2);
+  padding: 3px 8px;
+  white-space: nowrap;
+}
+.renew-how { font-size: 0.83rem; color: var(--text2); margin-bottom: 14px; line-height: 1.5; }
+.renew-stats {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+.renew-stat-item { display: flex; flex-direction: column; gap: 2px; }
+.renew-stat-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.55rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text3);
+}
+.renew-stat-val { font-size: 0.82rem; font-weight: 500; }
+.pros-cons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  font-size: 0.78rem;
+}
+.pros, .cons { display: flex; flex-direction: column; gap: 4px; }
+.pros-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.55rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--green);
+  margin-bottom: 4px;
+}
+.cons-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.55rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #e85447;
+  margin-bottom: 4px;
+}
+.pros li, .cons li {
+  list-style: none;
+  color: var(--text2);
+  padding-left: 12px;
+  position: relative;
+  line-height: 1.4;
+}
+.pros li::before { content: '+'; position: absolute; left: 0; color: var(--green); font-weight: 700; }
+.cons li::before { content: '−'; position: absolute; left: 0; color: #e85447; font-weight: 700; }
+
+/* 6 REASONS */
+.reasons-list { display: flex; flex-direction: column; gap: 20px; margin: 28px 0; }
+.reason-item {
+  display: flex;
+  gap: 20px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 22px;
+}
+.reason-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.5rem;
+  color: var(--border);
+  line-height: 1;
+  flex-shrink: 0;
+  width: 40px;
+}
+.reason-body h4 {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+.reason-body p { font-size: 0.9rem; color: var(--text2); }
+
+/* SIDEBAR */
+.sidebar-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 20px;
+  margin-bottom: 16px;
+}
+.sidebar-title {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text3);
+  margin-bottom: 14px;
+}
+.toc-list { display: flex; flex-direction: column; gap: 8px; }
+.toc-link {
+  font-size: 0.82rem;
+  color: var(--text2);
+  text-decoration: none;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  transition: color 0.2s;
+  line-height: 1.3;
+}
+.toc-link:hover { color: var(--accent); }
+.toc-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6rem;
+  color: var(--text3);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.key-number {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+.key-number:last-child { border-bottom: none; padding-bottom: 0; }
+.key-number:first-child { padding-top: 0; }
+.kn-val {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.6rem;
+  color: var(--accent);
+  letter-spacing: 0.04em;
+  line-height: 1;
+}
+.kn-desc { font-size: 0.75rem; color: var(--text2); }
+
+/* MEMO BOX */
+.memo-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-top: 2px solid var(--accent);
+  padding: 28px;
+  margin: 40px 0;
+}
+.memo-tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+.memo-box h3 {
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+.memo-box p { font-size: 0.9rem; color: var(--text2); }
+
+@media (max-width: 900px) {
+  .page-body { grid-template-columns: 1fr; }
+  .sidebar { position: static; }
+  .lng-chain { grid-template-columns: 1fr; }
+  .lng-arrow { display: none; }
+  .region-grid { grid-template-columns: 1fr; }
+  .renewables-grid { grid-template-columns: 1fr; }
+  .top-nav { padding: 0 20px; }
+  .top-nav .nav-toc { display: none; }
+  .hero, .page-body { padding-left: 24px; padding-right: 24px; }
+}
+</style>
+</head>
+<body>
+
+<nav class="top-nav">
+  <a class="nav-back" href="index.html">← Back</a>
+  <div class="nav-divider"></div>
+  <span class="nav-title">Month 1 · Week 1</span>
+  <div class="nav-toc">
+    <a href="#topic1">Primary vs Final</a>
+    <a href="#topic2">Energy Mix</a>
+    <a href="#topic3">LNG</a>
+    <a href="#topic4">Renewables</a>
+    <a href="#topic5">Why 86%</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-eyebrow">Month 1 · Week 1 · Foundations</div>
+  <h1>THE GLOBAL<br><span>ENERGY SYSTEM</span><br>BIG PICTURE</h1>
+  <p class="hero-sub">From the raw energy in nature to the electricity in your laptop — how the world's most important system actually works.</p>
+  <div class="hero-meta">
+    <div class="hero-meta-item">
+      <span class="meta-label">Topics</span>
+      <span class="meta-value">5 Core Topics</span>
+    </div>
+    <div class="hero-meta-item">
+      <span class="meta-label">Key figure</span>
+      <span class="meta-value">86% fossil fuels · 650 EJ global demand</span>
+    </div>
+    <div class="hero-meta-item">
+      <span class="meta-label">Data baseline</span>
+      <span class="meta-value">2025–2026</span>
+    </div>
+    <div class="hero-meta-item">
+      <span class="meta-label">Memo prompt</span>
+      <span class="meta-value">Why does 86% still hold?</span>
+    </div>
+  </div>
+</div>
+
+<div class="page-body">
+<div class="main-content">
+
+<!-- TOPIC 1 -->
+<section class="topic-section" id="topic1">
+  <div class="topic-tag">Topic 01</div>
+  <h2>PRIMARY VS<br><span>FINAL ENERGY</span></h2>
+  <p class="topic-intro">The distinction most journalists and politicians get wrong — and why it completely changes how you read energy statistics.</p>
+
+  <h3 class="section-head">What Is Primary Energy?</h3>
+  <p class="body-text">Primary energy is energy <strong>as it exists in nature</strong>, before any human transformation. It's the raw input: coal sitting in a mine, crude oil underground, uranium in a fuel rod, wind blowing across a field, sunlight hitting a panel. When you read "the world consumed 650 EJ of energy in 2024" — that's primary energy. It's the total of everything we extracted or captured from nature.</p>
+
+  <h3 class="section-head">What Is Final Energy?</h3>
+  <p class="body-text">Final energy is what <strong>actually reaches the end user</strong> — the energy that does useful work for people and industry: the electricity that powers your laptop, the diesel that moves a truck, the gas that heats your home, the petrol that propels your car.</p>
+
+  <h3 class="section-head">The Gap — And Why It's Huge</h3>
+  <p class="body-text">A massive amount of primary energy is lost before it becomes final energy. This is called <strong>conversion loss</strong> or thermodynamic loss. The main culprit is heat engines. When you burn coal in a power plant to make electricity, you're boiling water with fire to spin a turbine — a process that is fundamentally inefficient. The best modern coal plants convert about 45% of the coal's energy into electricity. The other 55% escapes as waste heat.</p>
+
+  <div class="callout orange">
+    <div class="callout-label">Key Physics</div>
+    This isn't an engineering flaw that hasn't been fixed yet. It's the <strong>Second Law of Thermodynamics</strong> — the Carnot efficiency ceiling. Any heat engine is fundamentally limited by the temperature difference between its hot and cold reservoirs. No amount of better engineering can beat it.
+  </div>
+
+  <h3 class="section-head">The Pipeline — Energy Lost At Every Step</h3>
+  <div class="pipeline">
+    <div class="pipeline-step">
+      <div class="pipeline-left">
+        <div class="pipeline-dot"></div>
+        <div class="pipeline-line"></div>
+      </div>
+      <div class="pipeline-content">
+        <div class="pipeline-label accent">Primary Energy</div>
+        <div class="pipeline-value">650 EJ</div>
+        <div class="pipeline-desc">Everything extracted from nature in 2024 — coal, oil, gas, uranium, wind, sun.</div>
+      </div>
+    </div>
+    <div class="pipeline-step">
+      <div class="pipeline-left">
+        <div class="pipeline-dot orange"></div>
+        <div class="pipeline-line"></div>
+      </div>
+      <div class="pipeline-content">
+        <div class="pipeline-label orange">Conversion Losses</div>
+        <div class="pipeline-value" style="color:var(--orange)">−230 EJ</div>
+        <div class="pipeline-desc">Power plants, refineries, engines. Coal plant loses 55%. Gas plant loses 40%. Nuclear loses 65%.</div>
+        <span class="pipeline-loss">35–40% of all primary energy is waste heat</span>
+      </div>
+    </div>
+    <div class="pipeline-step">
+      <div class="pipeline-left">
+        <div class="pipeline-dot"></div>
+        <div class="pipeline-line"></div>
+      </div>
+      <div class="pipeline-content">
+        <div class="pipeline-label accent">Final Energy</div>
+        <div class="pipeline-value">~400 EJ</div>
+        <div class="pipeline-desc">Electricity, heat, transport fuels — the energy that actually reaches people.</div>
+      </div>
+    </div>
+    <div class="pipeline-step">
+      <div class="pipeline-left">
+        <div class="pipeline-dot orange"></div>
+        <div class="pipeline-line"></div>
+      </div>
+      <div class="pipeline-content">
+        <div class="pipeline-label orange">End-Use Losses</div>
+        <div class="pipeline-value" style="color:var(--orange)">Further losses</div>
+        <div class="pipeline-desc">Petrol car engine: only 20–25% efficient. The rest is heat, noise, friction.</div>
+        <span class="pipeline-loss">Crude oil → petrol car wheels: only ~15–18% of original energy</span>
+      </div>
+    </div>
+    <div class="pipeline-step">
+      <div class="pipeline-left">
+        <div class="pipeline-dot red"></div>
+      </div>
+      <div class="pipeline-content">
+        <div class="pipeline-label red">Useful Energy</div>
+        <div class="pipeline-value" style="color:#e85447">Motion · Light · Warmth</div>
+        <div class="pipeline-desc">The tiny fraction that actually does the job you wanted.</div>
+      </div>
+    </div>
+  </div>
+
+  <h3 class="section-head">Why This Matters — The EV Revolution Explained</h3>
+  <p class="body-text">Electric vehicles are roughly <strong>85–90% efficient</strong> (battery to wheels). Compare that to 20–25% for a petrol engine. Even if your electricity comes from a gas power plant (~55–60% efficient), the full chain is still roughly comparable to a petrol car. If your electricity comes from renewables — the comparison is no contest.</p>
+
+  <div class="callout blue">
+    <div class="callout-label">The Statistics Trap</div>
+    When someone says "renewables are 14% of global energy," they mean 14% of <em>primary energy</em>. But solar and wind skip the thermal conversion stage — they convert energy directly. Their useful contribution is proportionally <strong>higher</strong> than the primary energy number suggests. This is why the IEA uses the "substitution method" in some of its reporting.
+  </div>
+
+  <div class="callout green">
+    <div class="callout-label">The Big Insight</div>
+    A fully electrified economy running on renewables might need only <strong>40–50% of today's primary energy</strong> to deliver the same standard of living. The energy transition isn't just swapping fuels — it's a massive efficiency upgrade for the whole economy.
+  </div>
+</section>
+
+<!-- TOPIC 2 -->
+<section class="topic-section" id="topic2">
+  <div class="topic-tag">Topic 02</div>
+  <h2>THE GLOBAL<br><span>ENERGY MIX</span></h2>
+  <p class="topic-intro">650 EJ. Here's exactly what fills it — and why each fuel conquered its specific corner of the economy.</p>
+
+  <h3 class="section-head">The Numbers (2024 Baseline)</h3>
+  <div class="bar-chart">
+    <div class="bar-row">
+      <span class="bar-label">Oil</span>
+      <div class="bar-track"><div class="bar-fill" style="width:34%;background:var(--accent)"></div></div>
+      <span class="bar-pct">34%</span>
+    </div>
+    <div class="bar-row">
+      <span class="bar-label">Coal</span>
+      <div class="bar-track"><div class="bar-fill" style="width:27%;background:#888"></div></div>
+      <span class="bar-pct">27%</span>
+    </div>
+    <div class="bar-row">
+      <span class="bar-label">Gas</span>
+      <div class="bar-track"><div class="bar-fill" style="width:25%;background:var(--blue)"></div></div>
+      <span class="bar-pct">25%</span>
+    </div>
+    <div class="bar-row">
+      <span class="bar-label">Renewables</span>
+      <div class="bar-track"><div class="bar-fill" style="width:9%;background:var(--green)"></div></div>
+      <span class="bar-pct">9%</span>
+    </div>
+    <div class="bar-row">
+      <span class="bar-label">Nuclear</span>
+      <div class="bar-track"><div class="bar-fill" style="width:5%;background:var(--orange)"></div></div>
+      <span class="bar-pct">5%</span>
+    </div>
+  </div>
+
+  <table class="data-table">
+    <thead>
+      <tr><th>Source</th><th>Share</th><th>EJ</th><th>Dominant sector</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="td-source">Oil</td><td class="td-share" style="color:var(--accent)">~34%</td><td>~221 EJ</td><td class="td-note">Transport (90% of all transport is oil)</td></tr>
+      <tr><td class="td-source">Coal</td><td class="td-share" style="color:#888">~27%</td><td>~175 EJ</td><td class="td-note">Cheap electricity &amp; steelmaking</td></tr>
+      <tr><td class="td-source">Natural Gas</td><td class="td-share" style="color:var(--blue)">~25%</td><td>~163 EJ</td><td class="td-note">Power + heating + fertiliser feedstock</td></tr>
+      <tr><td class="td-source">Renewables</td><td class="td-share" style="color:var(--green)">~9%</td><td>~58 EJ</td><td class="td-note">Wind, solar, hydro, bio, geo</td></tr>
+      <tr><td class="td-source">Nuclear</td><td class="td-share" style="color:var(--orange)">~5%</td><td>~33 EJ</td><td class="td-note">Low-carbon baseload electricity</td></tr>
+      <tr style="background:var(--surface)"><td class="td-source" style="color:var(--text)"><strong>Fossil Total</strong></td><td class="td-share" style="color:#e85447"><strong>86%</strong></td><td><strong>~559 EJ</strong></td><td class="td-note">Oil + Coal + Gas</td></tr>
+    </tbody>
+  </table>
+
+  <h3 class="section-head">Why Each Fuel Dominates Its Sector</h3>
+
+  <div class="callout">
+    <div class="callout-label">Oil — owns transport</div>
+    Oil is energy-dense, liquid at room temperature, stable, and surrounded by 150 years of infrastructure (pipelines, tankers, petrol stations). About <strong>90% of all transport energy globally is oil</strong>. There are 1.4 billion internal combustion engine vehicles on the road right now. They won't be retired in a decade.
+  </div>
+  <div class="callout">
+    <div class="callout-label">Coal — owns cheap electricity &amp; steel</div>
+    Coal is the most abundant fossil fuel on earth, found almost everywhere, cheap to mine and burn. For a developing country that needs to industrialise fast, coal is the fastest and cheapest path. China and India between them burn about <strong>73% of the world's coal</strong>. Coal is also still essential for steelmaking via coking coal — a process with no fully commercial clean alternative yet.
+  </div>
+  <div class="callout blue">
+    <div class="callout-label">Gas — the flexible backbone</div>
+    Gas is cleaner than coal, ramps up and down faster (critical for grid balancing), and is the feedstock for fertilisers via the <strong>Haber-Bosch process</strong>. Without gas-derived fertilisers, the world could feed roughly 4 billion people — not 8 billion. Natural gas is literally keeping half of humanity alive.
+  </div>
+
+  <h3 class="section-head">The Mix By Region — Q1 2026</h3>
+  <div class="region-grid">
+    <div class="region-card">
+      <div class="region-name" style="color:var(--blue)">European Union</div>
+      <div class="region-stat">Wind &amp; solar exceeded fossil fuels for first time in 2025 (30% vs 29%). Solar hit record 13% of electricity — above both coal and hydro.</div>
+      <div class="region-update">Fastest transition · 71%+ clean electricity</div>
+    </div>
+    <div class="region-card">
+      <div class="region-name" style="color:var(--orange)">USA</div>
+      <div class="region-stat">Coal generation jumped 12–13% in 2025. Power sector emissions rose 4.4% — second consecutive year of increases. IRA credits being phased out.</div>
+      <div class="region-update">Transition reversing under current policy</div>
+    </div>
+    <div class="region-card">
+      <div class="region-name" style="color:var(--accent)">China</div>
+      <div class="region-stat">Low-emission sources exceeded 40% of mix in H1 2025. Solar up 45%, wind up 17%. But still approved ~100 GW of new coal in 2024.</div>
+      <div class="region-update">World's largest solar+wind installer — also largest coal approver</div>
+    </div>
+    <div class="region-card">
+      <div class="region-name" style="color:var(--green)">India</div>
+      <div class="region-stat">Clean generation grew 20% in H1 2025, outpacing demand growth 3-to-1. Coal actually fell 3%. The most improved major economy.</div>
+      <div class="region-update">Solar exploding · quietly the best story</div>
+    </div>
+    <div class="region-card">
+      <div class="region-name" style="color:#888">Middle East</div>
+      <div class="region-stat">Burns its own oil and gas almost entirely. Minimal renewable deployment. Saudi Arabia, UAE, Qatar pursuing selective solar projects.</div>
+      <div class="region-update">Near-zero renewables penetration</div>
+    </div>
+    <div class="region-card">
+      <div class="region-name" style="color:#e85447">Africa</div>
+      <div class="region-stat">2% of global clean energy investment despite 20% of world population. Total energy investment 33% lower in 2025 than 2015. 600M still without electricity.</div>
+      <div class="region-update">Most alarming investment gap on the planet</div>
+    </div>
+    <div class="region-card">
+      <div class="region-name" style="color:var(--green)">Brazil</div>
+      <div class="region-stat">~65% hydro electricity — one of the cleanest grids of any major economy. Growing solar and wind on top of an already clean base.</div>
+      <div class="region-update">Very clean grid · hydro dominant</div>
+    </div>
+    <div class="region-card">
+      <div class="region-name" style="color:var(--blue)">Japan / Korea</div>
+      <div class="region-stat">Island nations with zero domestic fossil resources, 100% dependent on LNG imports. World's largest LNG buyers by necessity.</div>
+      <div class="region-update">LNG-dependent · nuclear revival underway</div>
+    </div>
+  </div>
+</section>
+
+<!-- TOPIC 3: LNG -->
+<section class="topic-section" id="topic3">
+  <div class="topic-tag">Topic 03</div>
+  <h2>NATURAL GAS<br><span>&amp; LNG</span></h2>
+  <p class="topic-intro">The technology that broke the geopolitical stranglehold of pipelines — and created a new global market for the fuel that powers industrial civilisation.</p>
+
+  <h3 class="section-head">The Three Jobs of Natural Gas</h3>
+
+  <div class="callout blue">
+    <div class="callout-label">1 · Electricity Generation (~40% of gas use)</div>
+    Gas-fired Combined Cycle Gas Turbines (CCGTs) are the most efficient thermal power plants ever built — up to 62% efficiency. They start and stop in minutes, making them perfect for balancing intermittent solar and wind. This is why gas is called the "transition fuel."
+  </div>
+  <div class="callout blue">
+    <div class="callout-label">2 · Industrial Heat &amp; Fertiliser (~35%)</div>
+    The Haber-Bosch process uses gas-derived hydrogen to synthesise ammonia for fertiliser. <strong>Without this process, the world can feed ~4 billion people. With it, 8 billion.</strong> Natural gas is the invisible foundation of the global food supply.
+  </div>
+  <div class="callout blue">
+    <div class="callout-label">3 · Heating Buildings (~25%)</div>
+    Gas boilers heat homes across northern Europe, North America, and Russia — creating massive seasonal demand swings that drive the entire complexity of gas storage and supply security.
+  </div>
+
+  <h3 class="section-head">Why Gas Has No Single Global Price</h3>
+  <table class="data-table">
+    <thead><tr><th>Benchmark</th><th>Region</th><th>Price Range</th><th>Why</th></tr></thead>
+    <tbody>
+      <tr><td class="td-source">Henry Hub</td><td>USA</td><td class="td-share" style="color:var(--green)">$2–5 / MMBtu</td><td class="td-note">Landlocked shale abundance. Almost impossible to export cheaply.</td></tr>
+      <tr><td class="td-source">TTF</td><td>Europe</td><td class="td-share" style="color:var(--orange)">€30–80 / MWh</td><td class="td-note">Must import via pipeline or LNG. Russia crisis pushed prices to record highs in 2022.</td></tr>
+      <tr><td class="td-source">JKM</td><td>Japan / Korea</td><td class="td-share" style="color:#e85447">$10–18 / MMBtu</td><td class="td-note">Island nations 100% dependent on LNG imports. Always the most expensive market.</td></tr>
+    </tbody>
+  </table>
+
+  <p class="body-text">This price disconnect exists because gas is hard to move. Oil is a liquid — put it in a tanker and ship it anywhere. Gas is a gas at room temperature — you can't pour it into a ship. This is where LNG changes everything.</p>
+
+  <h3 class="section-head">What Is LNG?</h3>
+  <p class="body-text">LNG = Liquefied Natural Gas. Same methane molecule, cooled to <strong>−162°C (−260°F)</strong>, at which point it becomes liquid and shrinks to <strong>1/600th of its original volume</strong>. One cubic metre of LNG contains 600 cubic metres of gas. Suddenly, transporting gas across oceans in ships becomes economically viable. LNG broke pipeline monopolies and created competition in gas markets for the first time.</p>
+
+  <h3 class="section-head">The Full LNG Chain — Gas to Your Hob</h3>
+  <div class="lng-chain">
+    <div class="lng-step">
+      <div class="lng-step-num">01</div>
+      <div class="lng-step-icon">⛏️</div>
+      <div class="lng-step-title">Extraction</div>
+      <div class="lng-step-desc">Gas wells drilled onshore or offshore. Qatar, Australia, USA, Russia are the top exporters.</div>
+      <div class="lng-arrow"></div>
+    </div>
+    <div class="lng-step">
+      <div class="lng-step-num">02</div>
+      <div class="lng-step-icon">🏭</div>
+      <div class="lng-step-title">Liquefaction</div>
+      <div class="lng-step-desc">Gas cooled to −162°C. Uses ~10% of the gas just to run the refrigeration. Plants cost $10–20bn. Qatar's Ras Laffan is the largest industrial site on Earth.</div>
+      <div class="lng-arrow"></div>
+    </div>
+    <div class="lng-step">
+      <div class="lng-step-num">03</div>
+      <div class="lng-step-icon">🚢</div>
+      <div class="lng-step-title">Shipping</div>
+      <div class="lng-step-desc">Specialised tankers ($200–250M each). Insulated tanks lose only 0.1–0.15% of cargo per day — the boil-off gas powers the ship's engines.</div>
+      <div class="lng-arrow"></div>
+    </div>
+    <div class="lng-step">
+      <div class="lng-step-num">04</div>
+      <div class="lng-step-icon">🏗️</div>
+      <div class="lng-step-title">Regasification</div>
+      <div class="lng-step-desc">LNG pumped ashore into insulated tanks, warmed by seawater heat exchangers back to gas, injected into pipeline network. Terminals cost $500M–$1bn.</div>
+      <div class="lng-arrow"></div>
+    </div>
+    <div class="lng-step">
+      <div class="lng-step-num">05</div>
+      <div class="lng-step-icon">🏠</div>
+      <div class="lng-step-title">Consumption</div>
+      <div class="lng-step-desc">Gas distributed via national pipeline networks. Heats homes, fuels power plants, feeds factories — same gas, from a ship that crossed an ocean.</div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <div class="callout-label">Germany's Emergency Response — 18 Months</div>
+    After Russia cut gas flows in 2022, Germany went from <strong>zero LNG terminals to five in under 18 months</strong> using Floating Storage and Regasification Units (FSRUs) — essentially LNG terminals built on ships, deployed in 9 months instead of 7 years. An extraordinary feat of industrial emergency response.
+  </div>
+
+  <div class="callout green">
+    <div class="callout-label">Spain — The Quiet Winner</div>
+    Spain has 6 regasification terminals, built decades ago because it had no pipeline connection to Russia. This is why Spain sailed through the 2022 energy crisis with relatively lower prices — it could receive LNG from anywhere in the world.
+  </div>
+</section>
+
+<!-- TOPIC 4: Renewables -->
+<section class="topic-section" id="topic4">
+  <div class="topic-tag">Topic 04</div>
+  <h2>ALL TYPES OF<br><span>RENEWABLE ENERGY</span></h2>
+  <p class="topic-intro">In H1 2025, renewables overtook coal as the largest share of global electricity for the first time ever. Here's every technology — how it works, where it stands, and what holds it back.</p>
+
+  <div class="callout" style="border-left-color:var(--green)">
+    <div class="callout-label">H1 2025 Milestone</div>
+    Renewables reached <strong>34.3% of global electricity</strong> in H1 2025, overtaking coal at 33.1% — the first time in history. Solar alone grew 31%, covering 83% of all new electricity demand growth.
+  </div>
+
+  <h3 class="section-head">The Renewable Mix (2025)</h3>
+  <div class="bar-chart">
+    <div class="bar-row"><span class="bar-label">Hydro</span><div class="bar-track"><div class="bar-fill" style="width:44%;background:var(--blue)"></div></div><span class="bar-pct">44%</span></div>
+    <div class="bar-row"><span class="bar-label">Wind</span><div class="bar-track"><div class="bar-fill" style="width:25%;background:var(--accent)"></div></div><span class="bar-pct">25%</span></div>
+    <div class="bar-row"><span class="bar-label">Solar PV</span><div class="bar-track"><div class="bar-fill" style="width:22%;background:var(--orange)"></div></div><span class="bar-pct">22%</span></div>
+    <div class="bar-row"><span class="bar-label">Biomass</span><div class="bar-track"><div class="bar-fill" style="width:6%;background:var(--green)"></div></div><span class="bar-pct">6%</span></div>
+    <div class="bar-row"><span class="bar-label">Other</span><div class="bar-track"><div class="bar-fill" style="width:3%;background:#666"></div></div><span class="bar-pct">3%</span></div>
+  </div>
+
+  <div class="renewables-grid">
+    <div class="renew-card">
+      <div class="renew-header">
+        <div class="renew-title">SOLAR PV</div>
+        <div class="renew-share">8.8% of global electricity · H1 2025</div>
+      </div>
+      <div class="renew-how">Silicon panels convert photons directly into electricity via the photovoltaic effect. No moving parts, no combustion, no water. Scales from a rooftop to a 5 GW desert farm.</div>
+      <div class="renew-stats">
+        <div class="renew-stat-item"><span class="renew-stat-label">Capacity factor</span><span class="renew-stat-val">10–25% (EU) / 25–35% (MENA)</span></div>
+        <div class="renew-stat-item"><span class="renew-stat-label">Cost trend</span><span class="renew-stat-val">−99% since 1976 (Wright's Law)</span></div>
+        <div class="renew-stat-item"><span class="renew-stat-label">2025 growth</span><span class="renew-stat-val">+31% year-on-year</span></div>
+      </div>
+      <div class="pros-cons">
+        <ul class="pros"><div class="pros-label">Pros</div><li>Cheapest electricity ever built</li><li>Modular, fast to deploy</li><li>No water, no fuel, no emissions</li><li>Rooftop = distributed resilience</li></ul>
+        <ul class="cons"><div class="cons-label">Cons</div><li>Intermittent — zero at night</li><li>Duck curve problem</li><li>China makes 85–90% of all panels</li><li>Land use at utility scale</li></ul>
+      </div>
+    </div>
+
+    <div class="renew-card">
+      <div class="renew-header">
+        <div class="renew-title">WIND</div>
+        <div class="renew-share">17–18% EU electricity · 2025</div>
+      </div>
+      <div class="renew-how">Wind turns turbine blades → gearbox → generator. Power scales with the cube of wind speed — a 10 m/s site produces 8× more than a 5 m/s site. Offshore turbines exploit stronger, more consistent sea winds.</div>
+      <div class="renew-stats">
+        <div class="renew-stat-item"><span class="renew-stat-label">Onshore capacity factor</span><span class="renew-stat-val">25–35%</span></div>
+        <div class="renew-stat-item"><span class="renew-stat-label">Offshore capacity factor</span><span class="renew-stat-val">40–60%</span></div>
+        <div class="renew-stat-item"><span class="renew-stat-label">Denmark</span><span class="renew-stat-val">&gt;55% from wind in 2025</span></div>
+      </div>
+      <div class="pros-cons">
+        <ul class="pros"><div class="pros-label">Pros</div><li>High capacity factors offshore</li><li>Minimal land use (farmable around)</li><li>Works day and night</li><li>North Sea — best energy real estate in Europe</li></ul>
+        <ul class="cons"><div class="cons-label">Cons</div><li>Intermittent — needs backup</li><li>Offshore: expensive + slow to build</li><li>Offshore crisis 2022–2024 showed fragility</li><li>Visual/noise opposition onshore</li></ul>
+      </div>
+    </div>
+
+    <div class="renew-card">
+      <div class="renew-header">
+        <div class="renew-title">HYDROPOWER</div>
+        <div class="renew-share">44% of renewable electricity · 2025</div>
+      </div>
+      <div class="renew-how">Falling water spins turbines. Provides firm, dispatchable power 24/7. Pumped hydro — pumping water uphill when electricity is cheap, releasing it at peak — is the world's dominant form of grid-scale energy storage.</div>
+      <div class="renew-stats">
+        <div class="renew-stat-item"><span class="renew-stat-label">Capacity factor</span><span class="renew-stat-val">35–50% (varies by rainfall)</span></div>
+        <div class="renew-stat-item"><span class="renew-stat-label">Largest plant</span><span class="renew-stat-val">Three Gorges — 22.5 GW</span></div>
+        <div class="renew-stat-item"><span class="renew-stat-label">Brazil grid</span><span class="renew-stat-val">~65% hydro</span></div>
+      </div>
+      <div class="pros-cons">
+        <ul class="pros"><div class="pros-label">Pros</div><li>Dispatchable 24/7 — no intermittency</li><li>Extremely long lifespan (80–100 yrs)</li><li>Pumped storage = giant battery</li><li>Cheap to operate once built</li></ul>
+        <ul class="cons"><div class="cons-label">Cons</div><li>Massive ecological footprint (dams)</li><li>Displaces communities (Three Gorges: 1.3M people)</li><li>Almost no viable new large sites in Europe</li><li>Vulnerable to drought (climate risk)</li></ul>
+      </div>
+    </div>
+
+    <div class="renew-card">
+      <div class="renew-header">
+        <div class="renew-title">NUCLEAR</div>
+        <div class="renew-share">5% global primary energy · ~10% electricity</div>
+      </div>
+      <div class="renew-how">Uranium fission chain reaction produces heat → steam → turbine → electricity. No combustion, no CO₂ during operation. Dispatchable 24/7. A fuel pellet the size of a fingertip contains as much energy as 3 barrels of oil.</div>
+      <div class="renew-stats">
+        <div class="renew-stat-item"><span class="renew-stat-label">Capacity factor</span><span class="renew-stat-val">90–92% (highest of any source)</span></div>
+        <div class="renew-stat-item"><span class="renew-stat-label">Safety</span><span class="renew-stat-val">Safest energy source per TWh</span></div>
+        <div class="renew-stat-item"><span class="renew-stat-label">CO₂</span><span class="renew-stat-val">12 g/kWh lifecycle (same as wind)</span></div>
+      </div>
+      <div class="pros-cons">
+        <ul class="pros"><div class="pros-label">Pros</div><li>24/7 firm zero-carbon power</li><li>Tiny land use for output delivered</li><li>Highest capacity factor of any source</li><li>Uranium supply is globally diversified</li></ul>
+        <ul class="cons"><div class="cons-label">Cons</div><li>Extremely expensive to build new</li><li>15–20 year construction timelines</li><li>Radioactive waste for 10,000+ years</li><li>Deep public opposition post-Chernobyl/Fukushima</li></ul>
+      </div>
+    </div>
+
+    <div class="renew-card">
+      <div class="renew-header">
+        <div class="renew-title">GEOTHERMAL</div>
+        <div class="renew-share">&lt;1% global electricity</div>
+      </div>
+      <div class="renew-how">Heat from the Earth's core drives steam turbines. Highly site-specific — viable only near tectonic boundaries (Iceland, Kenya, Philippines, New Zealand). Iceland is 30% geothermal electricity, nearly 90% geothermal heating.</div>
+      <div class="renew-stats">
+        <div class="renew-stat-item"><span class="renew-stat-label">Capacity factor</span><span class="renew-stat-val">80–95% — always on</span></div>
+        <div class="renew-stat-item"><span class="renew-stat-label">Best locations</span><span class="renew-stat-val">Ring of Fire, Rift Valley</span></div>
+      </div>
+      <div class="pros-cons">
+        <ul class="pros"><div class="pros-label">Pros</div><li>Truly 24/7 baseload clean power</li><li>Tiny footprint, invisible energy source</li><li>No fuel cost, minimal waste</li></ul>
+        <ul class="cons"><div class="cons-label">Cons</div><li>Extremely geographically limited</li><li>Enhanced geothermal (drilling anywhere) still early stage</li><li>Can trigger minor earthquakes</li></ul>
+      </div>
+    </div>
+
+    <div class="renew-card">
+      <div class="renew-header">
+        <div class="renew-title">BIOMASS / BIOENERGY</div>
+        <div class="renew-share">6% of renewable electricity mix</div>
+      </div>
+      <div class="renew-how">Burning organic material (wood, agricultural waste, purpose-grown energy crops) to produce heat and electricity. Also includes biogas (methane from decomposing organic waste) and biofuels (ethanol, biodiesel) for transport.</div>
+      <div class="renew-stats">
+        <div class="renew-stat-item"><span class="renew-stat-label">Capacity factor</span><span class="renew-stat-val">50–80% — dispatchable</span></div>
+        <div class="renew-stat-item"><span class="renew-stat-label">Key use</span><span class="renew-stat-val">Aviation &amp; shipping transition fuels</span></div>
+      </div>
+      <div class="pros-cons">
+        <ul class="pros"><div class="pros-label">Pros</div><li>Dispatchable — unlike solar/wind</li><li>Can use waste streams (no new land)</li><li>Aviation's only near-term clean fuel option</li></ul>
+        <ul class="cons"><div class="cons-label">Cons</div><li>Deeply contested — forests cleared for energy crops</li><li>Carbon accounting is complex and disputed</li><li>Competes with food land</li></ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <div class="callout-label">The Critical Systems Insight</div>
+    Every renewable except hydro and geothermal is intermittent. At 30–40% renewable share, system integration costs are manageable. At 80–100%, they become the central challenge of energy economics — requiring massive storage buildout, grid expansion, and interconnectors. This is why nuclear, hydro, and geothermal are strategically valuable beyond their raw output numbers: they provide <strong>clean power whenever you need it</strong>, regardless of weather.
+  </div>
+</section>
+
+<!-- TOPIC 5: Why 86% -->
+<section class="topic-section" id="topic5">
+  <div class="topic-tag">Topic 05</div>
+  <h2>WHY THE WORLD<br><span>STILL RUNS ON 86%</span><br>FOSSIL FUELS</h2>
+  <p class="topic-intro">Renewables are growing at 16% per year. Solar and wind are now the cheapest electricity ever built. So why hasn't the number moved? Here are the six reasons — updated to April 2026.</p>
+
+  <div class="callout orange">
+    <div class="callout-label">The Stubborn Number</div>
+    The Energy Institute's 2025 Statistical Review confirmed fossil fuels still account for <strong>86% of the global energy mix</strong>. Renewables added to the mix in 2025 — but they did not meaningfully replace what was already there. The headline figure has barely moved in a decade.
+  </div>
+
+  <div class="reasons-list">
+    <div class="reason-item">
+      <div class="reason-num">1</div>
+      <div class="reason-body">
+        <h4>Infrastructure Lock-In</h4>
+        <p>The global economy is physically built around fossil fuel equipment with decades of useful life remaining. 1.4 billion petrol cars. Millions of gas boilers. Thousands of coal power stations. China approved nearly 100 GW of new coal plants in 2024 alone — plants designed to operate for 30–40 years. These are not temporary measures. They are deliberate long-term commitments being made right now.</p>
+      </div>
+    </div>
+    <div class="reason-item">
+      <div class="reason-num">2</div>
+      <div class="reason-body">
+        <h4>Energy Density &amp; Reliability</h4>
+        <p>Fossil fuels are energy-dense, storable for months at low cost, and available 24/7 regardless of weather. When wind speeds dropped across Europe in early 2025, gas generation rose 8% to compensate, pushing the EU's gas import bill up by €32 billion for the year. One bad weather season can undo months of renewable progress.</p>
+      </div>
+    </div>
+    <div class="reason-item">
+      <div class="reason-num">3</div>
+      <div class="reason-body">
+        <h4>Cost Asymmetry Across Sectors</h4>
+        <p>In electricity, the economic battle is over — renewables have won. But electricity is roughly one-sixth of all energy. Transport, industrial heat, and heating still run on fuels, not electrons. In each case, the transition requires replacing not just the fuel but the entire end-use technology — buy a new car, rebuild a factory, replace a gas boiler. That costs trillions and takes decades.</p>
+      </div>
+    </div>
+    <div class="reason-item">
+      <div class="reason-num">4</div>
+      <div class="reason-body">
+        <h4>Political Economy &amp; Vested Interests</h4>
+        <p>The US is the clearest current example. Coal generation jumped 12–13% in 2025. Power sector emissions rose 4.4% — the second consecutive year of increases. The Trump administration propped up coal with federal emergency orders. The IEA revised US renewable forecasts down by nearly 50% for 2025–2030. A country that was leading the clean transition is now actively reversing it. The transition is not just a technology problem — it is a political one.</p>
+      </div>
+    </div>
+    <div class="reason-item">
+      <div class="reason-num">5</div>
+      <div class="reason-body">
+        <h4>The Developing World's Legitimate Claim</h4>
+        <p>Rich nations industrialised on cheap coal and oil over 150 years and became wealthy. Now they ask India, Africa, and Southeast Asia to develop using more expensive clean energy. Africa accounts for only 2% of global clean energy investment despite 20% of the world's population. Africa's total energy investment in 2025 is one-third lower than it was in 2015. When a Nigerian government chooses between reliable power now or a solar project it cannot finance, it chooses gas. That is not a failure of values — it is a rational response to an unequal global financial system.</p>
+      </div>
+    </div>
+    <div class="reason-item">
+      <div class="reason-num">6</div>
+      <div class="reason-body">
+        <h4>The Speed Gap — And AI as a New Wildcard</h4>
+        <p>Wind and solar expanded by 16% in 2024 — yet total fossil fuel use still grew. Renewables are winning the race for new capacity but haven't peaked total fossil demand. And now there is a new accelerant: data centres consumed ~415 TWh globally in 2024 (+12%/yr since 2017). The IEA projects data centre demand to more than double to 945 TWh by 2030 — roughly Japan's entire current electricity consumption. In the US, data centres will account for nearly half of all electricity demand growth through 2030. In the short term, natural gas is meeting most of this new demand. AI is making the transition harder, not easier.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="memo-box">
+    <div class="memo-tag">Your Memo — Week 1</div>
+    <h3>Write 300 words: "Why does the world still run 86% on fossil fuels despite solar and wind now being the cheapest electricity ever built?"</h3>
+    <p>Pick <em>one</em> of the six reasons above and argue it is the most underrated — the one most people miss when they discuss the energy transition. Build an argument, don't list. Use the framework but write in your own words.</p>
+  </div>
+</section>
+
+</div>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sidebar-box">
+    <div class="sidebar-title">Contents</div>
+    <div class="toc-list">
+      <a href="#topic1" class="toc-link"><span class="toc-num">01</span>Primary vs Final Energy</a>
+      <a href="#topic2" class="toc-link"><span class="toc-num">02</span>The Global Energy Mix</a>
+      <a href="#topic3" class="toc-link"><span class="toc-num">03</span>Natural Gas &amp; LNG</a>
+      <a href="#topic4" class="toc-link"><span class="toc-num">04</span>All Renewables</a>
+      <a href="#topic5" class="toc-link"><span class="toc-num">05</span>Why 86% Persists</a>
+    </div>
+  </div>
+
+  <div class="sidebar-box">
+    <div class="sidebar-title">Key Numbers</div>
+    <div class="key-number">
+      <span class="kn-val">650 EJ</span>
+      <span class="kn-desc">Global primary energy consumption 2024</span>
+    </div>
+    <div class="key-number">
+      <span class="kn-val">86%</span>
+      <span class="kn-desc">Fossil fuel share of global energy mix — unchanged for a decade</span>
+    </div>
+    <div class="key-number">
+      <span class="kn-val">34.3%</span>
+      <span class="kn-desc">Renewables share of global electricity in H1 2025 — first time beating coal</span>
+    </div>
+    <div class="key-number">
+      <span class="kn-val">1/600</span>
+      <span class="kn-desc">Volume ratio of LNG vs natural gas at room temperature</span>
+    </div>
+    <div class="key-number">
+      <span class="kn-val">−162°C</span>
+      <span class="kn-desc">Temperature required to liquefy natural gas for shipping</span>
+    </div>
+    <div class="key-number">
+      <span class="kn-val">8 billion</span>
+      <span class="kn-desc">People fed thanks to gas-derived fertilisers (Haber-Bosch). Without gas: ~4 billion.</span>
+    </div>
+    <div class="key-number">
+      <span class="kn-val">945 TWh</span>
+      <span class="kn-desc">Projected data centre electricity demand by 2030 — ≈ Japan's entire consumption</span>
+    </div>
+  </div>
+
+  <div class="sidebar-box">
+    <div class="sidebar-title">Unit Cheat Sheet</div>
+    <div class="key-number">
+      <span class="kn-val" style="font-size:1rem">1 EJ ≈ 278 TWh</span>
+      <span class="kn-desc">The conversion between joules and watt-hours at global scale</span>
+    </div>
+    <div class="key-number">
+      <span class="kn-val" style="font-size:1rem">kWh → MWh → GWh → TWh</span>
+      <span class="kn-desc">Each step ×1,000. Your electricity bill is in kWh. Countries report in TWh.</span>
+    </div>
+    <div class="key-number">
+      <span class="kn-val" style="font-size:1rem">Electricity ≠ Energy</span>
+      <span class="kn-desc">Global electricity is ~29,000 TWh. Total energy is ~180,000 TWh. Electricity is only 1/6 of all energy.</span>
+    </div>
+  </div>
+</aside>
+</div>
+
+</body>
+</html>
